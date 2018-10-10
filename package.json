@@ -1,0 +1,53 @@
+{
+  "name": "remark-parse2",
+  "version": "0.0.1",
+  "description": "remark-parse extension",
+  "scripts": {
+    "pub": "npm publish .",
+    "dev": "webpack-dev-server --config ./examples/webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vmarkdown/remark-parse2.git"
+  },
+  "keywords": [
+    "markdown",
+    "remark",
+    "mdast",
+    "parse"
+  ],
+  "main": "index.js",
+  "author": "yucopowo@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vmarkdown/remark-parse2/issues"
+  },
+  "homepage": "https://github.com/vmarkdown/remark-parse2#readme",
+  "devDependencies": {
+    "html-webpack-plugin": "^3.2.0",
+    "remark-parse": "^5.0.0",
+    "text-loader": "^0.0.1",
+    "unified": "^7.0.0",
+    "unist-find-node": "^1.1.2",
+    "webpack": "^4.17.2",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.9"
+  },
+  "dependencies": {
+    "collapse-white-space": "^1.0.2",
+    "is-alphabetical": "^1.0.0",
+    "is-decimal": "^1.0.0",
+    "is-whitespace-character": "^1.0.0",
+    "is-word-character": "^1.0.0",
+    "markdown-escapes": "^1.0.0",
+    "parse-entities": "^1.1.0",
+    "repeat-string": "^1.5.4",
+    "state-toggle": "^1.0.0",
+    "trim": "0.0.1",
+    "trim-trailing-lines": "^1.0.0",
+    "unherit": "^1.0.4",
+    "unist-util-remove-position": "^1.0.0",
+    "vfile-location": "^2.0.0",
+    "xtend": "^4.0.1"
+  }
+}
