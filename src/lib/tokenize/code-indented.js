@@ -1,5 +1,8 @@
 'use strict';
 
+var hash = require('../util/hash');
+
+
 var repeat = require('repeat-string');
 var trim = require('trim-trailing-lines');
 
@@ -89,10 +92,15 @@ function indentedCode(eat, value, silent) {
             return true;
         }
 
+        var origin = content;
+
         return eat(subvalue)({
             type: 'code',
             lang: null,
-            value: trim(content)
+            value: trim(content),
+
+            origin: origin,
+            hash: hash(origin)
         });
     }
 }
