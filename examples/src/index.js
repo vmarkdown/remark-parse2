@@ -1,14 +1,34 @@
 const unified = require('unified');
-const parse = require('../../index');
+const markdown = require('../../index');
+const html = require('remark-html');
 
 const processor = unified()
-    .use(parse, {});
+    .use(markdown, {
+        position: true,
+        gfm: true,
+        commonmark: false,
+        footnotes: true,
+        pedantic: false
+    })
+    .use(html);
 
-const md = require('./demo.md');
+const md = require('./test.md');
 
-console.time('parse');
-const mdast = processor.parse(md);
-console.timeEnd('parse');
+(async ()=>{
+
+    console.time('parse');
+    const mdast = processor.parse(md);
+    console.timeEnd('parse');
 
 
-console.log(mdast);
+    console.time('process');
+    const file = await processor.process(md);
+    console.timeEnd('process');
+
+    document.getElementById('app').innerHTML = file.contents;
+
+    console.log(mdast);
+
+
+
+})();
