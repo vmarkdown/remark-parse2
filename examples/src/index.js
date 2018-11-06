@@ -1,6 +1,18 @@
 const unified = require('unified');
 const markdown = require('../../index');
-const html = require('remark-html');
+const remark2rehype = require('remark-rehype');
+// const remarkAlign = require('../../src/remark-align');
+const math = require('../../src/remark-math');
+// const math = require('@paperist/remark-math');
+
+const katex = require('./katex.js');
+
+
+
+
+const stringify = require('rehype-stringify');
+
+// const html = require('remark-html');
 
 const processor = unified()
     .use(markdown, {
@@ -10,81 +22,71 @@ const processor = unified()
         footnotes: true,
         pedantic: false
     })
-    .use(html);
+    .use(math)
+    .use(katex)
+    // .use(remarkAlign, {
+    //     left: 'text-left',
+    //     center: 'text-center',
+    //     right: 'text-right',
+    // })
+    .use(function () {
+        return function (root) {
+            console.log(root);
+
+            // var children = root.children;
+            //
+            // var fromIndex = -1;
+            // var toIndex = -1;
+            //
+            // for(var i=0;i<children.length;i++) {
+            //     var node = children[i];
+            //
+            //     if(node.type !== 'html') {
+            //         continue;
+            //     }
+            //
+            //     if(fromIndex < 0) {
+            //         fromIndex = i;
+            //     }
+            //     else {
+            //         toIndex = i;
+            //     }
+            //
+            //     var newNode = {};
+            //
+            //
+            //
+            //
+            //
+            // }
+
+            return root;
+        }
+    })
+    .use(remark2rehype,{
+        allowDangerousHTML: true
+    })
+    .use(function () {
+        return function (root) {
+            console.log(root);
+            return root;
+        }
+    })
+
+    .use(stringify);
 
 const md = require('./md/test.md');
-
-// (async ()=>{
-//
-//     console.time('parse');
-//     const mdast = processor.parse(md);
-//     console.timeEnd('parse');
-//
-//
-//     console.time('process');
-//     const file = await processor.process(md);
-//     console.timeEnd('process');
-//
-//     document.getElementById('app').innerHTML = file.contents;
-//
-//     console.log(mdast);
-//
-//
-//
-//
-// })();
 
 (async ()=>{
 
     console.time('process');
-
-    for(var i=0;i<100;i++){
-        var file = marked.lexer(md);
-    }
-
+    const file = await processor.process(md);
+    const html = file.contents;
     console.timeEnd('process');
 
-    document.getElementById('app').innerHTML = JSON.stringify(file,null, 2);
+    document.getElementById('app').innerHTML = html;
 
-    console.log(file);
 
 })();
-
-
-// (async ()=>{
-//
-//     var MarkdownIt = markdownit;
-//     var markdownIt = new MarkdownIt({
-//         html:         true,        // Enable HTML tags in source
-//         xhtmlOut:     false,        // Use '/' to close single tags (<br />).
-//                                     // This is only for full CommonMark compatibility.
-//         breaks:       true,        // Convert '\n' in paragraphs into <br>
-//         langPrefix:   'language-',  // CSS language prefix for fenced blocks. Can be
-//                                     // useful for external highlighters.
-//         linkify:      true,        // Autoconvert URL-like text to links
-//
-//         // Enable some language-neutral replacement + quotes beautification
-//         typographer:  false,
-//
-//         // Double + single quotes replacement pairs, when typographer enabled,
-//         // and smartquotes on. Set doubles to '«»' for Russian, '„“' for German.
-//         quotes: '“”‘’',
-//
-//     });
-//
-//     console.time('process');
-//     for(var i=0;i<100;i++){
-//         var file = markdownIt.parse(md, {});
-//     }
-//     console.timeEnd('process');
-//
-//     document.getElementById('app').innerHTML = JSON.stringify(file,null, 2);
-//
-//     // console.log(file);
-//
-// })();
-
-
-
 
 
