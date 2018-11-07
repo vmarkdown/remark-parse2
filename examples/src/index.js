@@ -26,11 +26,16 @@ Vue.component('vremark-math', {
 
         }
 
-        return h('div', {
-            domProps: {
-                innerHTML: renderedValue
-            }
-        });
+        return renderedValue?h('pre', {},[
+            h('code', {
+            },[
+                h('div', {
+                    domProps: {
+                        innerHTML: renderedValue
+                    }
+                })
+            ])
+        ]):renderedValue;
     }
 });
 
