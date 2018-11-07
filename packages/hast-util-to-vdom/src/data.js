@@ -36,7 +36,7 @@ module.exports = function (node) {
             Object.assign(domProps, _vue.domProps);
         }
 
-        delete properties._vue;
+        // delete properties._vue;
     }
 
     Object.assign(attrs, properties);

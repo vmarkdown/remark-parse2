@@ -3,7 +3,7 @@ const breaks = require('remark-breaks');
 const remark2rehype = require('remark-rehype');
 const math = require('../packages/remark-math');
 const katex = require('../packages/remark-katex');
-const raw = require('rehype-raw');
+const raw = require('../packages/rehype-raw');
 const clean = require('../packages/rehype-clean');
 const vdom = require('../packages/rehype-vdom');
 
@@ -22,7 +22,7 @@ exports.plugins = [
         footnotes: true,
         pedantic: true
     }],
-    breaks,
+    // breaks,
     math,
     katex,
 
@@ -36,6 +36,13 @@ exports.plugins = [
     [remark2rehype, {
         allowDangerousHTML: true
     }],
+
+    function () {
+        return function (root, file) {
+            console.log(root);
+        }
+    },
+
     clean,
     raw,
 

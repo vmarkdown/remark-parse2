@@ -11,14 +11,20 @@ module.exports = function plugin(opts = {}) {
                 'class': ['vremark-math'],
                 props: {
                     component: 'vremark-math',
-                    code: node.math
+                    code: node.math,
+                    inline: node.type === 'inlineMath'
                 }
             });
 
         }
 
-        visit(root, 'inlineMath', render);
-        visit(root, 'math', render);
+
+        visit(root, function (node) {
+            return node.type === 'math' || node.type === 'inlineMath';
+        }, render);
+
+        // visit(root, 'inlineMath', render);
+        // visit(root, 'math', render);
 
     }
 };
