@@ -3,7 +3,6 @@ const breaks = require('remark-breaks');
 const remark2rehype = require('remark-rehype');
 const math = require('../packages/remark-math');
 const katex = require('../packages/remark-katex');
-const remove = require('unist-util-remove');
 const raw = require('rehype-raw');
 const clean = require('../packages/rehype-clean');
 const vdom = require('../packages/rehype-vdom');
@@ -25,7 +24,7 @@ exports.plugins = [
     }],
     breaks,
     math,
-    // katex,
+    katex,
 
     function () {
         return function (root, file) {

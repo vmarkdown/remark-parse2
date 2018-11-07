@@ -1,32 +1,34 @@
-const visit = require('unist-util-visit')
-const katex = require('katex')
-const unified = require('unified')
-const parse = require('rehype-parse')
-// const position = require('unist-util-position')
-
-function parseMathHtml(html) {
-    return unified()
-        .use(parse, {
-            fragment: true,
-            position: false
-        })
-        .parse(html)
-}
-
-function getSVG(value) {
-    return new Promise(function (resolve, reject) {
-        fetch('//tex.s2cms.ru/svg/'+value)
-            .then(response => response.text())
-            .then(data => {
-                resolve(data);
-            });
-    });
-}
-
+const visit = require('unist-util-visit');
+const data = require('unist-util-data');
 
 module.exports = function plugin(opts = {}) {
-    if (opts.throwOnError == null) opts.throwOnError = false
-    return async function transform(root, file, next) {
+    // if (opts.throwOnError == null) opts.throwOnError = false
+    return function transform(root) {
+
+        function render(node) {
+
+            data(node, {
+                'class': ['vremark-math'],
+                props: {
+                    component: 'vremark-math',
+                    code: node.math
+                }
+            });
+
+        }
+
+        visit(root, 'inlineMath', render);
+
+        visit(root, 'math', render);
+
+
+
+
+
+
+
+
+
 
         // async function renderContent(element) {
         //     let renderedValue;
@@ -112,49 +114,49 @@ module.exports = function plugin(opts = {}) {
         //     next();
         // });
 
-        async function render(node) {
-            let renderedValue;
-            const isMath = node.type === 'math';
-
-            try {
-                renderedValue = katex.renderToString(node.math, {
-                    displayMode: isMath
-                });
-            }
-            catch (err) {
-                const response = await fetch('//tex.s2cms.ru/svg/' + encodeURIComponent(node.math) );
-                renderedValue = await response.text();
-            }
-
-            const childAst = parseMathHtml(renderedValue).children[0];
-            node.data = node.data || {};
-            node.data.hChildren = [childAst];
-        }
-
-
-        const nodes = [];
-
-        visit(root, 'inlineMath', function (node) {
-            nodes.push(node);
-        });
-
-        visit(root, 'math', function (node) {
-            nodes.push(node);
-        });
-
-
-        for(var i=0;i<nodes.length;i++) {
-            let node = nodes[i];
-
-            await render(node);
-            // const svg = await getSVG(node.math);
-            // node.svg = svg;
-            // const childAst = parseMathHtml(svg).children[0];
-            // node.data = node.data || {};
-            // node.data.hChildren = [childAst];
-        }
-
-        next();
+        // async function render(node) {
+        //     let renderedValue;
+        //     const isMath = node.type === 'math';
+        //
+        //     try {
+        //         renderedValue = katex.renderToString(node.math, {
+        //             displayMode: isMath
+        //         });
+        //     }
+        //     catch (err) {
+        //         const response = await fetch('//tex.s2cms.ru/svg/' + encodeURIComponent(node.math) );
+        //         renderedValue = await response.text();
+        //     }
+        //
+        //     const childAst = parseMathHtml(renderedValue).children[0];
+        //     node.data = node.data || {};
+        //     node.data.hChildren = [childAst];
+        // }
+        //
+        //
+        // const nodes = [];
+        //
+        // visit(root, 'inlineMath', function (node) {
+        //     nodes.push(node);
+        // });
+        //
+        // visit(root, 'math', function (node) {
+        //     nodes.push(node);
+        // });
+        //
+        //
+        // for(var i=0;i<nodes.length;i++) {
+        //     let node = nodes[i];
+        //
+        //     await render(node);
+        //     // const svg = await getSVG(node.math);
+        //     // node.svg = svg;
+        //     // const childAst = parseMathHtml(svg).children[0];
+        //     // node.data = node.data || {};
+        //     // node.data.hChildren = [childAst];
+        // }
+        //
+        // next();
         // return root;
     }
 }

@@ -3,6 +3,12 @@ const toVDom = require('../../packages/hast-util-to-vdom');
 const md = require('../md/test.md');
 const Vue = require('vue').default;
 
+Vue.component('vremark-math', {
+    render(h) {
+        return h('div',{}, '======math');
+    }
+});
+
 const app = new Vue({
     el: '#app',
     methods: {

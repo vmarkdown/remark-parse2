@@ -12,6 +12,7 @@ module.exports = {
     },
     resolve: {
         alias: {
+            'unist-util-data': path.resolve(__dirname, '../packages', 'unist-util-data', 'index.js'),
         }
     },
     module: {
