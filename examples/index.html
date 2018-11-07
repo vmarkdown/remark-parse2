@@ -29,18 +29,24 @@
             max-width: 600px;
         }
 
+        i{
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: aqua;
+        }
     </style>
 
     <script src="//cdn.bootcss.com/markdown-it/8.4.2/markdown-it.js"></script>
     <script src="//cdn.bootcss.com/marked/0.5.1/marked.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+
 </head>
 <body>
 
-<div class="container" id="app">
-    <!-- Content here -->
+<div class="container markdown-body" >
+    <div id="app"></div>
 </div>
 
-<!--<div id="app" class="markdown-body"></div>-->
 </body>
 </html>

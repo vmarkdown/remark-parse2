@@ -1,91 +1,41 @@
 const unified = require('unified');
-const markdown = require('../../index');
-const remark2rehype = require('remark-rehype');
-// const remarkAlign = require('../../src/remark-align');
-const math = require('../../src/remark-math');
-// const math = require('@paperist/remark-math');
+const toVDom = require('../../packages/hast-util-to-vdom');
+const md = require('../md/test.md');
+const Vue = require('vue').default;
 
-const katex = require('./katex.js');
-
-
-
-
-const stringify = require('rehype-stringify');
-
-// const html = require('remark-html');
-
-const processor = unified()
-    .use(markdown, {
-        position: true,
-        gfm: true,
-        commonmark: false,
-        footnotes: true,
-        pedantic: false
-    })
-    .use(math)
-    .use(katex)
-    // .use(remarkAlign, {
-    //     left: 'text-left',
-    //     center: 'text-center',
-    //     right: 'text-right',
-    // })
-    .use(function () {
-        return function (root) {
-            console.log(root);
-
-            // var children = root.children;
-            //
-            // var fromIndex = -1;
-            // var toIndex = -1;
-            //
-            // for(var i=0;i<children.length;i++) {
-            //     var node = children[i];
-            //
-            //     if(node.type !== 'html') {
-            //         continue;
-            //     }
-            //
-            //     if(fromIndex < 0) {
-            //         fromIndex = i;
-            //     }
-            //     else {
-            //         toIndex = i;
-            //     }
-            //
-            //     var newNode = {};
-            //
-            //
-            //
-            //
-            //
-            // }
-
-            return root;
+const app = new Vue({
+    el: '#app',
+    methods: {
+        async update(md) {
+            const h = this.$createElement;
+            const file = await processor.data('settings', {h:h}).process(md);
+            this.vdom = file.contents;
+            console.log(this.vdom);
+            this.$forceUpdate();
         }
-    })
-    .use(remark2rehype,{
-        allowDangerousHTML: true
-    })
-    .use(function () {
-        return function (root) {
-            console.log(root);
-            return root;
-        }
-    })
+    },
+    render(h) {
+        return this.vdom || h('div', '=======');
+    }
+});
 
-    .use(stringify);
+const parse = require('../../index');
+const processor = unified().use(parse);
 
-const md = require('./md/test.md');
 
 (async ()=>{
+    // const mdast = processor.parse(md);
+    // console.log(mdast);
+    // const hast = await processor.run(mdast);
+    // console.log(hast);
+    // app.update(hast);
 
-    console.time('process');
-    const file = await processor.process(md);
-    const html = file.contents;
-    console.timeEnd('process');
+    // const file = await processor.process(md);
+    // debugger
+    // const hast = file.contents;
+    // app.update(hast);
 
-    document.getElementById('app').innerHTML = html;
-
+    app.update(md);
 
 })();
 

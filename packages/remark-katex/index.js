@@ -122,7 +122,7 @@ module.exports = function plugin(opts = {}) {
                 });
             }
             catch (err) {
-                const response = await fetch('//tex.s2cms.ru/svg/'+encodeURIComponent(node.math));
+                const response = await fetch('//tex.s2cms.ru/svg/' + encodeURIComponent(node.math) );
                 renderedValue = await response.text();
             }
 

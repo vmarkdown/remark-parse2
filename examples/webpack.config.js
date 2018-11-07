@@ -7,7 +7,7 @@ module.exports = {
         'example-main': path.resolve(__dirname, 'src/index.js')
     },
     output: {
-        path: path.resolve(__dirname, 'www'),
+        path: path.resolve(__dirname, 'dist'),
         filename: '[name].js'
     },
     resolve: {
@@ -30,9 +30,16 @@ module.exports = {
             template: 'examples/index.html'
         })
     ],
+    // devServer: {
+    //     // hotOnly: true,
+    //     contentBase: path.join(__dirname, "www")
+    // },
     devServer: {
-        // hotOnly: true,
-        contentBase: path.join(__dirname, "www")
+        hot: false,
+        inline: false,
+        contentBase: [
+            path.resolve(__dirname, "dist"), path.resolve(__dirname, "www")
+        ]
     }
 };
 
