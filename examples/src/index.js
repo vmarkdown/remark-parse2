@@ -3,9 +3,34 @@ const toVDom = require('../../packages/hast-util-to-vdom');
 const md = require('../md/test.md');
 const Vue = require('vue').default;
 
+
+const katex = require('katex');
+
 Vue.component('vremark-math', {
+    props: {
+        'code': {
+            type: String,
+            require: true
+        }
+    },
     render(h) {
-        return h('div',{}, '======math');
+        console.log(this.code);
+
+        var renderedValue = '';
+        try {
+            renderedValue = katex.renderToString(this.code, {
+                displayMode: true
+            });
+        }
+        catch (err) {
+
+        }
+
+        return h('div', {
+            domProps: {
+                innerHTML: renderedValue
+            }
+        });
     }
 });
 
