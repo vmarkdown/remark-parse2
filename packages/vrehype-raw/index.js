@@ -126,7 +126,7 @@ module.exports = function plugin(options = {}) {
             const newNode = {};
             Object.assign(newNode, hast);
             Object.assign(newNode, {
-                children: node.nodes
+                children: newNode.children.concat(node.nodes)
             });
 
             const start = node.start;

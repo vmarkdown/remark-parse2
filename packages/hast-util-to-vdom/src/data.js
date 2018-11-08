@@ -1,5 +1,12 @@
 module.exports = function (node) {
 
+    if(node.data && node.data.component) {
+        node.type = 'component';
+        node.component = node.data.component;
+    }
+
+    return node.data || {};
+    /*
     var properties = node.properties || {};
     var style = properties.style || {};
 
@@ -50,5 +57,5 @@ module.exports = function (node) {
         domProps: domProps
     });
 
-    return data;
+    return data;*/
 };

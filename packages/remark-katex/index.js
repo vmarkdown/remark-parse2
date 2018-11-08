@@ -9,14 +9,14 @@ module.exports = function plugin(opts = {}) {
 
             // debugger
 
-            // data(node, {
-            //     'class': ['vremark-math'],
-            //     props: {
-            //         component: 'vremark-math',
-            //         code: node.math,
-            //         inline: node.type === 'inlineMath'
-            //     }
-            // });
+            data(node, {
+                component: 'vremark-math',
+                // 'class': ['vremark-math'],
+                props: {
+                    code: node.math,
+                    inline: node.type === 'inlineMath'
+                }
+            });
 
             // Object.assign(node.position, {
             //     test: 9999

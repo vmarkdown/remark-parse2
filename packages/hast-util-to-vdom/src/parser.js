@@ -31,7 +31,8 @@ Parser.prototype.parseNode = function(node, parent) {
         console.error('renderer:'+node.type+' not found!');
         return null;
     }
-    return this.renderer[node.type].apply(null, [h, node, data(node), children, this.options]);
+    const _data = data(node);
+    return this.renderer[node.type].apply(null, [h, node, _data, children, this.options]);
 };
 
 Parser.prototype.parse = function(root) {

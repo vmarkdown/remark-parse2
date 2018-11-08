@@ -4,13 +4,13 @@ module.exports = {
         return h(node.tagName || 'div', data, children);
     },
     element: function(h, node, data, children) {
-        if(data.props && data.props.component) {
-            return h(data.props.component, data);
-        }
         return h(node.tagName, data, children);
     },
     text: function(h, node) {
         return node.value;
+    },
+    component: function(h, node, data) {
+        return h(node.component, data);
     }
 
 };

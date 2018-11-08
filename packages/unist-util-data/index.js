@@ -1,10 +1,8 @@
 module.exports = function (node, data) {
 
     node.data = node.data || {};
-    // var hProperties = node.data.hProperties || {};
     var hData = node.data.hData || {};
 
-    // var _vue = hData._vue || {};
     var className = hData.class || [];
     var style = hData.style || {};
     var attrs = hData.attrs || {};
@@ -14,15 +12,19 @@ module.exports = function (node, data) {
     if(data.class) {
         className = [].concat(className).concat(data.class);
     }
+
     if(data.style) {
         Object.assign(style, data.style);
     }
+
     if(data.attrs) {
         Object.assign(attrs, data.attrs);
     }
+
     if(data.props) {
         Object.assign(props, data.props);
     }
+
     if(data.domProps) {
         Object.assign(domProps, data.domProps);
     }
@@ -31,17 +33,29 @@ module.exports = function (node, data) {
         hData.class = className;
     }
 
+    if(!!Object.keys(style).length) {
+        hData.style = style;
+    }
+
+    if(!!Object.keys(attrs).length) {
+        hData.attrs = attrs;
+    }
+
+    if(!!Object.keys(props).length) {
+        hData.props = props;
+    }
+
+    if(!!Object.keys(domProps).length) {
+        hData.domProps = domProps;
+    }
+
     if(data.hasOwnProperty('key')){
         hData.key = data.key;
     }
 
-    hData.style = style;
-    hData.attrs = attrs;
-    hData.props = props;
-    hData.domProps = domProps;
+    if(data.hasOwnProperty('component')){
+        hData.component = data.component;
+    }
 
-    // hData._vue = hData;
-    // node.data.hProperties = hProperties;
     node.data.hData = hData;
-
 };

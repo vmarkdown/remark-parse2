@@ -34,6 +34,7 @@ Vue.component('vremark-math', {
 
         return renderedValue ?
             h(self.inline?'span':'div', {
+                class: [self.inline?'vremark-inline-math':'vremark-math'],
                 domProps: {
                     innerHTML: renderedValue
                 }

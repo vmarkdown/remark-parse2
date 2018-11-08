@@ -13,6 +13,7 @@ module.exports = {
     resolve: {
         alias: {
             'unist-util-data': path.resolve(__dirname, '../packages', 'unist-util-data', 'index.js'),
+            'mdast-util-to-hast': path.resolve(__dirname, '../packages', 'mdast-util-to-hast', 'index.js'),
         }
     },
     module: {
