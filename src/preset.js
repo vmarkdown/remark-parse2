@@ -193,12 +193,12 @@ exports.plugins = [
         allowDangerousHTML: true
     }],
 
-    function () {
-        return function (root, file) {
-            console.log('root1');
-            console.log(root);
-        }
-    },
+    // function () {
+    //     return function (root, file) {
+    //         console.log('root1');
+    //         console.log(root);
+    //     }
+    // },
 
     clean,
     raw,

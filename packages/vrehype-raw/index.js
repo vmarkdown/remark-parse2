@@ -1,6 +1,26 @@
 const parse = require('rehype-parse');
 const unified = require('unified');
 
+function findNextNode(children, from) {
+
+    for(let i=from;i<children.length;i++) {
+
+        const node = children[i];
+
+        if(node.type === 'raw') {
+            return {
+                index: i,
+                node: node
+            }
+        }
+
+    }
+
+
+    return null;
+
+
+}
 
 function parseHTML(html) {
     const processor = unified().use(parse, {fragment: true});
@@ -9,28 +29,6 @@ function parseHTML(html) {
 }
 
 module.exports = function plugin(options = {}) {
-
-
-    function findNextNode(children, from) {
-
-        for(let i=from;i<children.length;i++) {
-
-            const node = children[i];
-
-            if(node.type === 'raw') {
-                return {
-                    index: i,
-                    node: node
-                }
-            }
-
-        }
-
-
-        return null;
-
-
-    }
 
     function getList(root) {
         const children = root.children;
@@ -89,8 +87,10 @@ module.exports = function plugin(options = {}) {
     return function transform(root) {
 
 
+        console.log('start===============');
 
-
+        debugger
+        console.log(root);
 
         // for(let i=0;i<children.length;i++) {
         //
@@ -136,7 +136,6 @@ module.exports = function plugin(options = {}) {
 
         }
 
-        console.log('start===============');
         console.log(root);
 
 
