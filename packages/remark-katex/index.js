@@ -7,14 +7,38 @@ module.exports = function plugin(opts = {}) {
 
         function render(node) {
 
-            data(node, {
-                'class': ['vremark-math'],
-                props: {
-                    component: 'vremark-math',
-                    code: node.math,
-                    inline: node.type === 'inlineMath'
-                }
-            });
+            // debugger
+
+            // data(node, {
+            //     'class': ['vremark-math'],
+            //     props: {
+            //         component: 'vremark-math',
+            //         code: node.math,
+            //         inline: node.type === 'inlineMath'
+            //     }
+            // });
+
+            // Object.assign(node.position, {
+            //     test: 9999
+            // });
+
+            // const value = node.value;
+
+
+            // node.value = {
+            //     data: {
+            //         'class': ['vremark-math'],
+            //     },
+            //     value: '================'
+            // };
+
+            // var properties = node.properties || {};
+            //
+            // properties.data = {
+            //     test: 9999
+            // };
+            //
+            // node.properties = properties;
 
         }
 
@@ -26,5 +50,6 @@ module.exports = function plugin(opts = {}) {
         // visit(root, 'inlineMath', render);
         // visit(root, 'math', render);
 
+        return root;
     }
 };

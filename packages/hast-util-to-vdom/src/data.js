@@ -1,4 +1,5 @@
 module.exports = function (node) {
+
     var properties = node.properties || {};
     var style = properties.style || {};
 
