@@ -59,7 +59,9 @@ exports.plugins = [
 
     // clean,
 
-    sanitize,
+    [sanitize, {
+        "clobberPrefix": ""
+    }],
 
     function () {
         return function (root, file) {
