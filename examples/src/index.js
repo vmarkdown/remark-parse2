@@ -1,56 +1,10 @@
 const unified = require('unified');
-const toVDom = require('../../packages/hast-util-to-vdom');
 const md = require('../md/test.md');
 const Vue = require('vue').default;
 
-
-const katex = require('katex');
-
-Vue.component('vremark-math', {
-    props: {
-        'code': {
-            type: String,
-            require: true
-        },
-        'inline': {
-            type: Boolean,
-            default: true
-        }
-    },
-    render(h) {
-        // console.log(this.code);
-
-        const self = this;
-
-        var renderedValue = '';
-        try {
-            renderedValue = katex.renderToString(this.code, {
-                displayMode: !self.inline
-            });
-        }
-        catch (err) {
-
-        }
-
-        return renderedValue ?
-            h(self.inline?'span':'div', {
-                class: [self.inline?'vremark-inline-math':'vremark-math'],
-                domProps: {
-                    innerHTML: renderedValue
-                }
-            })
-            :
-            h('pre', {}, [
-                h('code', {
-
-                    domProps: {
-                        innerHTML: self.code
-                    }
-
-                })
-            ]);
-    }
-});
+const plugins = {
+    'vremark-plugin-math': require('./plugins/vremark-plugin-math')
+};
 
 const app = new Vue({
     el: '#app',
@@ -58,10 +12,17 @@ const app = new Vue({
         async update(md) {
             const h = this.$createElement;
             console.time('process');
-            const file = await processor.data('settings', {h:h}).process(md);
+            const file = await processor.data('settings', {
+                h:h,
+                plugins: plugins
+            }).process(md);
             console.timeEnd('process');
             this.vdom = file.contents;
+
+            console.log(file.mdast);
+            console.log(file.hast);
             console.log(this.vdom);
+
             this.$forceUpdate();
         }
     },

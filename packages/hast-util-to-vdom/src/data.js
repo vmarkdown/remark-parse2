@@ -1,14 +1,18 @@
-module.exports = function (node) {
+module.exports = function (node, options) {
 
     if(!node.properties && !node.data) {
         return {};
     }
 
+    const plugins = options.plugins || {};
     node.data = node.data || {};
 
-    if(node.data.component) {
-        node.type = 'component';
-        node.component = node.data.component;
+    if(node.data.plugin && plugins.hasOwnProperty(node.data.plugin)) {
+        const plugin = plugins[node.data.plugin];
+        if(plugin.component) {
+            node.type = 'component';
+            node.component = plugin.component;
+        }
     }
 
     const properties = Object.assign({}, node.properties);

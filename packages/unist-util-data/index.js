@@ -57,5 +57,9 @@ module.exports = function (node, data) {
         hData.component = data.component;
     }
 
+    if(data.hasOwnProperty('plugin')){
+        hData.plugin = data.plugin;
+    }
+
     node.data.hData = hData;
 };

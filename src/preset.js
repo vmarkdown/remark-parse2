@@ -7,7 +7,7 @@ const remark2rehype = require('remark-rehype');
 // const math = require('../packages/remark-math');
 const math = require('@paperist/remark-math');
 const vmath = require('../packages/vremark-math');
-const katex = require('../packages/remark-katex');
+const katex = require('../packages/vremark-katex');
 // const raw = require('../packages/rehype-raw');
 const raw = require('../packages/vrehype-raw');
 const clean = require('../packages/rehype-clean');
@@ -18,7 +18,6 @@ const vdom = require('../packages/rehype-vdom');
 // exports.settings = {bullet: '*', fences: true};
 
 exports.settings = {};
-
 
 exports.plugins = [
 
@@ -35,14 +34,13 @@ exports.plugins = [
     math, vmath,
     katex,
 
-    /*
+
     function () {
         return function (root, file) {
-            // console.log('root0');
-            console.log(root);
+            file.mdast = root;
         }
     },
-    */
+
 
     // rehype
     [remark2rehype, {
@@ -61,19 +59,13 @@ exports.plugins = [
 
     // clean,
 
-    // math,
-    // katex,
-
     sanitize,
 
-    /*
     function () {
         return function (root, file) {
-            // console.log('root2');
-            console.log(root);
+            file.hast = root;
         }
     },
-    */
 
     vdom
 ];
