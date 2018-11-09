@@ -1,7 +1,12 @@
+// const markdown = require('../packages/remark-parse');
 const markdown = require('remark-parse');
+const footnote = require('../packages/vremark-footnote');
 const breaks = require('remark-breaks');
 const remark2rehype = require('remark-rehype');
-const math = require('../packages/remark-math');
+
+// const math = require('../packages/remark-math');
+const math = require('@paperist/remark-math');
+const vmath = require('../packages/vremark-math');
 const katex = require('../packages/remark-katex');
 // const raw = require('../packages/rehype-raw');
 const raw = require('../packages/vrehype-raw');
@@ -23,14 +28,15 @@ exports.plugins = [
         footnotes: true,
         pedantic: true
     }],
+    footnote,
     breaks,
-    math,
+    math, vmath,
     katex,
 
     function () {
         return function (root, file) {
             // console.log('root0');
-            console.log(root);
+            // console.log(root);
 
 
             // const children = root.children;
@@ -199,9 +205,11 @@ exports.plugins = [
     //         console.log(root);
     //     }
     // },
-
     clean,
+
     raw,
+
+    // clean,
 
     // math,
     // katex,

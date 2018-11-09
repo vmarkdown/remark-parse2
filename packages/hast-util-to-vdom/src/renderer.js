@@ -11,6 +11,14 @@ module.exports = {
     },
     component: function(h, node, data) {
         return h(node.component, data);
+    },
+    raw: function(h, node, data) {
+        data = {
+            domProps: {
+                innerHTML: node.value
+            }
+        };
+        return h('div', data);
     }
 
 };
