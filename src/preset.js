@@ -1,5 +1,6 @@
 // const markdown = require('../packages/remark-parse');
 const markdown = require('remark-parse');
+const toc = require('../packages/vremark-toc');
 const footnote = require('../packages/vremark-footnote');
 const breaks = require('remark-breaks');
 const remark2rehype = require('remark-rehype');
@@ -17,6 +18,21 @@ const vdom = require('../packages/rehype-vdom');
 
 // exports.settings = {bullet: '*', fences: true};
 
+var merge = require('deepmerge').default;
+var gh = require('hast-util-sanitize/lib/github');
+var schema = merge(gh, {
+    "clobberPrefix": "",
+    tagNames: ['input'],
+    attributes: {
+        '*': ['className']
+    }
+});
+
+// var toc = require('mdast-util-toc');
+// var toc = require('remark-toc');
+
+
+
 exports.settings = {};
 
 exports.plugins = [
@@ -29,6 +45,23 @@ exports.plugins = [
         footnotes: true,
         pedantic: true
     }],
+
+    [toc, {
+
+    }],
+
+    function () {
+        return function (root, file) {
+
+            // var result = toc(root);
+            // root.children.push(result.map);
+            // debugger
+
+
+        }
+    },
+
+
     footnote,
     breaks,
     math, vmath,
@@ -49,8 +82,9 @@ exports.plugins = [
 
     // function () {
     //     return function (root, file) {
-    //         console.log('root1');
-    //         console.log(root);
+    //         // console.log('root1');
+    //         // console.log(root);
+    //         debugger
     //     }
     // },
     clean,
@@ -59,9 +93,7 @@ exports.plugins = [
 
     // clean,
 
-    [sanitize, {
-        "clobberPrefix": ""
-    }],
+    [sanitize, schema],
 
     function () {
         return function (root, file) {
