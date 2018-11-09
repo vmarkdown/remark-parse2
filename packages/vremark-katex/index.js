@@ -1,5 +1,6 @@
 var visit = require('unist-util-visit');
-var data = require('unist-util-data');
+// var data = require('unist-util-data');
+var data = require('../unist-util-data');
 
 module.exports = function plugin(options = {}) {
 
