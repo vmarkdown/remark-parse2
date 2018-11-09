@@ -1,8 +1,5 @@
-const parse = require('rehype-parse');
-const unified = require('unified');
-const visit = require('unist-util-visit');
+var visit = require('unist-util-visit');
 var remove = require('unist-util-remove');
-
 
 var attributeName = '[a-zA-Z_:][a-zA-Z0-9:._-]*';
 var unquoted = '[^"\'=<>`\\u0000-\\u0020]+';
@@ -19,8 +16,9 @@ var processing = '<[?].*?[?]>';
 var declaration = '<![A-Za-z]+\\s+[^>]*>';
 var cdata = '<!\\[CDATA\\[[\\s\\S]*?\\]\\]>';
 
-const openTagRegExp = new RegExp(openTag);
-const closeTagRegExp = new RegExp(closeTag);
+var openTagRegExp = new RegExp(openTag);
+var closeTagRegExp = new RegExp(closeTag);
+var strictCloseTagRegExp = new RegExp('^'+closeTag);
 
 function findNextNode(children, from, tagName) {
     const equalTagName = '</'+tagName+'>';
@@ -53,17 +51,16 @@ function findNextNode(children, from, tagName) {
 
 }
 
-function parseHTML(html) {
-    const processor = unified().use(parse, {fragment: true});
-    const hast = processor.parse(html);
-    return hast.children[0];
-}
+var parseHTML = require('./parse-html');
 
 function isOpenTag(str) {
     return openTagRegExp.test(str);
 }
 
-function isCloseTag(str) {
+function isCloseTag(str, strict) {
+    if(strict) {
+        return strictCloseTagRegExp.test(str);
+    }
     return closeTagRegExp.test(str);
 }
 
@@ -185,7 +182,7 @@ function processLevel0(root){
 function processLevel1(root){
 
     remove(root, function (node) {
-        return !!(node.type === 'raw' && isCloseTag(node.value));
+        return !!(node.type === 'raw' && isCloseTag(node.value, true));
     });
 
 
@@ -208,12 +205,8 @@ function processLevel1(root){
 module.exports = function plugin(options = {}) {
 
     return function transform(root) {
-
         processLevel0(root);
         processLevel1(root);
-
-        // console.log(root);
-
         return root;
     }
 };

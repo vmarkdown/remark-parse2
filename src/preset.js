@@ -36,7 +36,7 @@ exports.plugins = [
     function () {
         return function (root, file) {
             // console.log('root0');
-            // console.log(root);
+            console.log(root);
 
 
             // const children = root.children;
@@ -217,7 +217,7 @@ exports.plugins = [
     function () {
         return function (root, file) {
             // console.log('root2');
-            // console.log(root);
+            console.log(root);
 
             // root.children = [
             //     {

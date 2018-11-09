@@ -4,12 +4,20 @@
 
 我们理解您需要更便捷更高效的工具记录思想，整理笔记、知识，并将其中承载的价值传播给他人，**Cmd Markdown** 是我们给出的答案 —— 我们为记录思想和分享知识提供更专业的工具。 您可以使用 Cmd Markdown：
 
+
+
 > * 整理知识，学习笔记
 > * 发布日记，杂文，所见所想
 > * 撰写发布技术文稿（代码支持）
 > * 撰写发布学术论文（LaTeX 公式支持）
 
+<img width="100" src="https://www.zybuluo.com/static/img/logo.png" onload="javascript:alert(1)" />
+
+<div style="text-align: center;">
+
 ![cmd-markdown-logo](https://www.zybuluo.com/static/img/logo.png)
+
+</div>
 
 除了您现在看到的这个 Cmd Markdown 在线版本，您还可以前往以下网址下载：
 
@@ -190,3 +198,4 @@ Bob-->Alice: I am good thanks!
 [2]: https://www.zybuluo.com/mdeditor?url=https://www.zybuluo.com/static/editor/md-help.markdown#cmd-markdown-高阶语法手册
 [3]: http://weibo.com/ghosert
 [4]: http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference
+

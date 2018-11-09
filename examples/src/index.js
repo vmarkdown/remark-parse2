@@ -57,7 +57,9 @@ const app = new Vue({
     methods: {
         async update(md) {
             const h = this.$createElement;
+            console.time('process');
             const file = await processor.data('settings', {h:h}).process(md);
+            console.timeEnd('process');
             this.vdom = file.contents;
             console.log(this.vdom);
             this.$forceUpdate();
