@@ -40,11 +40,43 @@ function generateFootnotes(h) {
         wrap(
             [
                 thematicBreak(h),
+
+                /* old start */
+                /*
                 list(h, {
                     type: 'list',
                     ordered: true,
                     children: listItems
                 })
+                */
+                /* old end */
+
+                /* new start */
+                (function () {
+
+                    var footnoteList = list(h, {
+                        type: 'list',
+                        ordered: true,
+                        children: listItems
+                    });
+
+                    footnoteList.children && footnoteList.children.forEach(function (listItem) {
+                        if(listItem.type === "element"
+                            && listItem.tagName === "li"
+                            && listItem.children.length > 0 ) {
+                            // var item = listItem.children[0];
+                            // item.tagName = 'span';
+                            var item = listItem.children.find(function (item) {
+                                return item.tagName === 'p';
+                            });
+                            item && (item.tagName = 'span');
+                        }
+                    });
+
+                    return footnoteList;
+
+                })()
+                /* new end */
             ],
             true
         )
