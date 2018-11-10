@@ -29,11 +29,12 @@ module.exports = function (node, options) {
         delete properties.className;
     }
 
-    if (node.data.hasOwnProperty('hash')){
+    if (node.type !== 'root' && node.data.hasOwnProperty('hash')){
         node.data.attrs = node.data.attrs || {};
         if(!node.data.attrs.hasOwnProperty('id')) {
             node.data.attrs.id = node.data.hash;
         }
+        node.data.key = node.data.hash;
     }
 
     if (Object.keys(properties).length > 0 ){
