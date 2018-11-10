@@ -53,6 +53,10 @@ module.exports = function (node, data) {
         hData.key = data.key;
     }
 
+    if(data.hasOwnProperty('hash')){
+        hData.hash = data.hash;
+    }
+
     if(data.hasOwnProperty('component')){
         hData.component = data.component;
     }

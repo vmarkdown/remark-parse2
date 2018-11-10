@@ -29,6 +29,13 @@ module.exports = function (node, options) {
         delete properties.className;
     }
 
+    if (node.data.hasOwnProperty('hash')){
+        node.data.attrs = node.data.attrs || {};
+        if(!node.data.attrs.hasOwnProperty('id')) {
+            node.data.attrs.id = node.data.hash;
+        }
+    }
+
     if (Object.keys(properties).length > 0 ){
         node.data.attrs = node.data.attrs || {};
         Object.assign(node.data.attrs, properties);

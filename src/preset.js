@@ -3,6 +3,8 @@ const markdown = require('remark-parse');
 const toc = require('../packages/vremark-toc');
 const footnote = require('../packages/vremark-footnote');
 const breaks = require('remark-breaks');
+const hash = require('../packages/remark-hash');
+
 const remark2rehype = require('remark-rehype');
 
 // const math = require('../packages/remark-math');
@@ -74,6 +76,7 @@ exports.plugins = [
         }
     },
 
+    hash,
 
     // rehype
     [remark2rehype, {
