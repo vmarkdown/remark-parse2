@@ -24,7 +24,7 @@ const raw = require('../packages/vrehype-raw');
 const clean = require('../packages/rehype-clean');
 const sanitize = require('rehype-sanitize');
 
-const vdom = require('../packages/rehype-vdom');
+// const vdom = require('../packages/rehype-vdom');
 
 // exports.settings = {bullet: '*', fences: true};
 
@@ -118,5 +118,5 @@ exports.plugins = [
         }
     },
 
-    vdom
+    // vdom
 ];
