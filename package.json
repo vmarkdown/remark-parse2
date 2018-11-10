@@ -1,6 +1,6 @@
 {
   "name": "vremark-parse",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "vremark-parse extension",
   "scripts": {
     "pub": "npm publish .",
