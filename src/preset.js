@@ -11,6 +11,14 @@ const remark2rehype = require('remark-rehype');
 const math = require('@paperist/remark-math');
 const vmath = require('../packages/vremark-math');
 const katex = require('../packages/vremark-katex');
+const flowchart = require('../packages/vremark-flowchart');
+const sequence = require('../packages/vremark-sequence');
+const mermaid = require('../packages/vremark-mermaid');
+const g2 = require('../packages/vremark-g2');
+const chart = require('../packages/vremark-chart');
+const highlight = require('../packages/vremark-highlight');
+
+
 // const raw = require('../packages/rehype-raw');
 const raw = require('../packages/vrehype-raw');
 const clean = require('../packages/rehype-clean');
@@ -69,6 +77,12 @@ exports.plugins = [
     math, vmath,
     katex,
 
+    flowchart,
+    sequence,
+    mermaid,
+    g2,
+    chart,
+    highlight,
 
     function () {
         return function (root, file) {
