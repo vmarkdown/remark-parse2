@@ -118,9 +118,9 @@ exports.plugins = [
 
     [sanitize, schema],
 
-    data,
-
     hash,
+
+    data,
 
     function () {
         return function (root, file) {

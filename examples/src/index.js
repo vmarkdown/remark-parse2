@@ -88,9 +88,9 @@ const app = new Vue({
         app.update(require('../md/test.md'));
     }, 0);
 
-    setTimeout(function () {
-        app.update(require('../md/test1.md'));
-    }, 5000);
+    // setTimeout(function () {
+    //     app.update(require('../md/test1.md'));
+    // }, 5000);
 
 
 })();

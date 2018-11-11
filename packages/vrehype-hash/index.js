@@ -1,6 +1,6 @@
 var visit = require('unist-util-visit');
 var util = require('../util/util');
-var data = require('../unist-util-data');
+// var data = require('../unist-util-data');
 
 function all(nodes, map) {
     var hashs = [];
@@ -40,13 +40,36 @@ function one(node, map) {
     if(node.hasOwnProperty('value')){
         values.push(node.value);
     }
-    if(node.data && node.data.attrs){
-        const attrs = node.data.attrs;
-        attrs.href && values.push(attrs.href);
-        attrs.src && values.push(attrs.src);
-        attrs.alt && values.push(attrs.alt);
-        attrs.title && values.push(attrs.title);
+
+    const properties = {};
+
+    if(node.properties){
+        Object.assign(properties, node.properties);
     }
+    if(node.data && node.data.attrs){
+        Object.assign(properties, node.data.attrs);
+    }
+    if(Object.keys(properties).length > 0) {
+        properties.href && values.push(properties.href);
+        properties.src && values.push(properties.src);
+        properties.alt && values.push(properties.alt);
+        properties.title && values.push(properties.title);
+    }
+
+    // if(node.properties){
+    //     const properties = node.properties;
+    //     properties.href && values.push(properties.href);
+    //     properties.src && values.push(properties.src);
+    //     properties.alt && values.push(properties.alt);
+    //     properties.title && values.push(properties.title);
+    // }
+    // if(node.data && node.data.attrs){
+    //     const attrs = node.data.attrs;
+    //     attrs.href && values.push(attrs.href);
+    //     attrs.src && values.push(attrs.src);
+    //     attrs.alt && values.push(attrs.alt);
+    //     attrs.title && values.push(attrs.title);
+    // }
 
     if(values.length > 0){
         var value0 = values.join('');
