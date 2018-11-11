@@ -1,5 +1,5 @@
 var renderer = require('./renderer');
-var data = require('./data');
+// var data = require('./data');
 
 function Parser(options) {
     this.options = options || {};
@@ -31,8 +31,9 @@ Parser.prototype.parseNode = function(node, parent) {
         console.error('renderer:'+node.type+' not found!');
         return null;
     }
-    const _data = data(node, this.options);
-    return this.renderer[node.type].apply(null, [h, node, _data, children, this.options]);
+    // const _data = data(node, this.options);
+    // return this.renderer[node.type].apply(null, [h, node, _data, children, this.options]);
+    return this.renderer[node.type].apply(null, [h, node, node.data || {}, children, this.options]);
 };
 
 Parser.prototype.parse = function(root) {

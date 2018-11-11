@@ -32,15 +32,35 @@ function listItem(h, node, parent) {
         container = single ? result : result[0].children
 
         if (container.length !== 0) {
-            container.unshift(u('text', ' '))
+            /* old start */
+            // container.unshift(u('text', ' '))
+            /* old end */
+
+            /* new start */
+            container.unshift(u('text', {position: node.position},' '))
+            /* new end */
         }
 
         container.unshift(
+            /* old start */
+            /*
             h(null, 'input', {
                 type: 'checkbox',
                 checked: node.checked,
                 disabled: true
             })
+            */
+            /* old end */
+
+            /* new start */
+            h({
+                position: node.position
+            }, 'input', {
+                type: 'checkbox',
+                checked: node.checked,
+                disabled: true
+            })
+            /* new end */
         )
 
         // According to github-markdown-css, this class hides bullet.

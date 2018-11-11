@@ -24,14 +24,30 @@ function all(nodes, map) {
 
 function one(node, map) {
 
-    if(node.type === 'thematicBreak'){
+    if(node.tagName === 'hr' && node.children.length === 0){
         return 0;
     }
 
     var hashs = [];
 
-    if(node.hasOwnProperty('value') || node.hasOwnProperty('url')){
-        var value0 = node.value || node.url;
+    // if(node.hasOwnProperty('value') || node.hasOwnProperty('url')){
+    //     var value0 = node.value || node.url;
+    //     var hash0 = util.hash(String(value0));
+    //     hashs.push(hash0);
+    // }
+
+    let values = [];
+    if(node.hasOwnProperty('value')){
+        values.push(node.value);
+    }
+    if(node.data && node.data.attrs){
+        const attrs = node.data.attrs;
+        attrs.href && values.push(attrs.href);
+        attrs.src && values.push(attrs.src);
+    }
+
+    if(values.length > 0){
+        var value0 = values.join('');
         var hash0 = util.hash(String(value0));
         hashs.push(hash0);
     }
@@ -41,7 +57,7 @@ function one(node, map) {
         hashs.push(hash1);
     }
 
-    if(hashs.length === 0) {
+    if(hashs.length === 0 && node.position) {
         var value2 =
             node.position.start.line + ':' + node.position.start.column
             + '-'
@@ -50,9 +66,9 @@ function one(node, map) {
         hashs.push(hash2);
     }
 
-    var hash = hashs.reduce(function (a, b) {
+    var hash = hashs.length>0 ? hashs.reduce(function (a, b) {
         return a+b;
-    });
+    }): 0;
 
     if(!map[hash]) {
         map[hash] = 1;
@@ -70,9 +86,10 @@ function one(node, map) {
     // node.hash = hash;
 
     if(node.type !== 'root') {
-        data(node, {
-            hash: hash
-        });
+        // data(node, {
+        //     hash: hash
+        // });
+        node.hash = hash;
     }
 
     return hash;

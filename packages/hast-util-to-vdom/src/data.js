@@ -35,6 +35,7 @@ module.exports = function (node, options) {
             node.data.attrs.id = node.data.hash;
         }
         node.data.key = node.data.hash;
+        delete node.data.hash;
     }
 
     if (Object.keys(properties).length > 0 ){
