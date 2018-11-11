@@ -24,7 +24,7 @@ function all(nodes, map) {
 
 function one(node, map) {
 
-    if(node.type === 'thematicBreak'){
+    if(node.type === 'thematicBreak' || node.type === 'break'){
         return 0;
     }
 
