@@ -29,7 +29,7 @@ function data(node, options) {
 
     if(properties.className) {
         node.data['class'] = [].concat(node.data['class']||'').concat(properties.className);
-        // delete properties.className;
+        delete properties.className;
     }
 
     if (node.type !== 'root' && node.hash){

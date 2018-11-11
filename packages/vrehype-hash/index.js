@@ -82,14 +82,14 @@ function one(node, map) {
         hashs.push(hash1);
     }
 
-    if(hashs.length === 0 && node.position) {
-        var value2 =
-            node.position.start.line + ':' + node.position.start.column
-            + '-'
-            + node.position.end.line + ':' + node.position.end.column;
-        var hash2 = util.hash(value2);
-        hashs.push(hash2);
-    }
+    // if(ifhashs.length === 0 && node.position) {
+    //     var value2 =
+    //         node.position.start.line + ':' + node.position.start.column
+    //         + '-'
+    //         + node.position.end.line + ':' + node.position.end.column;
+    //     var hash2 = util.hash(value2);
+    //     hashs.push(hash2);
+    // }
 
     var hash = hashs.length>0 ? hashs.reduce(function (a, b) {
         return a+b;
