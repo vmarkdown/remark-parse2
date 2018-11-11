@@ -44,6 +44,8 @@ function one(node, map) {
         const attrs = node.data.attrs;
         attrs.href && values.push(attrs.href);
         attrs.src && values.push(attrs.src);
+        attrs.alt && values.push(attrs.alt);
+        attrs.title && values.push(attrs.title);
     }
 
     if(values.length > 0){
