@@ -1,5 +1,7 @@
 // const markdown = require('../packages/remark-parse');
 const markdown = require('remark-parse');
+const externalLinks = require('../packages/remark-external-links');
+
 const toc = require('../packages/vremark-toc');
 const footnote = require('../packages/vremark-footnote');
 const breaks = require('remark-breaks');
@@ -58,20 +60,22 @@ exports.plugins = [
         pedantic: true
     }],
 
+    [externalLinks, {/*,target: '_blank' rel: ['nofollow']*/}],
+
     [toc, {
 
     }],
 
-    function () {
-        return function (root, file) {
-
-            // var result = toc(root);
-            // root.children.push(result.map);
-            // debugger
-
-
-        }
-    },
+    // function () {
+    //     return function (root, file) {
+    //
+    //         // var result = toc(root);
+    //         // root.children.push(result.map);
+    //         // debugger
+    //
+    //
+    //     }
+    // },
 
 
     footnote,
