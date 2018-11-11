@@ -24,7 +24,7 @@ function all(nodes, map) {
 
 function one(node, map) {
 
-    if(node.tagName === 'hr' && node.children.length === 0){
+    if( (node.tagName === 'hr'||node.tagName === 'br') && node.children.length === 0){
         return 0;
     }
 
