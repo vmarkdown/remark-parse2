@@ -105,6 +105,10 @@ function data(node, index, parent, options) {
                 parent.tagName = plugin.component;
                 parent.children = [];
             }
+            else {
+                node.type = 'element';
+                node.tagName = plugin.component;
+            }
             // node.type = 'element';
             // node.tagName = plugin.name || plugin.component.name || plugin.component;
         }
