@@ -40,6 +40,12 @@ const app = new Vue({
             const h = this.$createElement;
             console.time('process');
             const file = await processor().data('settings', {
+                config: {
+                    root: {
+                        tagName: 'main',
+                        class: 'markdown-body'
+                    }
+                },
                 h:h,
                 plugins: plugins
             }).process(md);
@@ -84,18 +90,27 @@ const app = new Vue({
     // }, 7000);
 
 
+
+
+    // setTimeout(function () {
+    //     var dom = app.$refs['41243535'];
+    //
+    //     console.log(dom);
+    //
+    //     dom.style.backgroundColor = '#38323261';
+    // }, 1000);
+    // setTimeout(function () {
+    //     app.update(require('../md/test.md'));
+    // }, 3000);
+
     setTimeout(function () {
-        app.update(require('../md/test.md'));
+        app.update(md);
     }, 0);
 
+
     setTimeout(function () {
-        var dom = app.$refs['41243535'];
-
-        console.log(dom);
-
-        dom.style.backgroundColor = '#38323261';
-    }, 1000);
-
+        app.update(md.replace('Markdown简介','====='));
+    }, 5000);
 
     // setTimeout(function () {
     //     app.update(require('../md/test1.md'));
