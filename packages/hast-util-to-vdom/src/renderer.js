@@ -9,9 +9,9 @@ module.exports = {
     text: function(h, node) {
         return node.value;
     },
-    component: function(h, node, data) {
-        return h(node.component, data);
-    },
+    // component: function(h, node, data) {
+    //     return h(node.tagName, data);
+    // },
     raw: function(h, node, data) {
         data = {
             domProps: {

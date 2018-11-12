@@ -1,8 +1,5 @@
 // var visit = require('unist-util-visit');
 var util = require('../util/util');
-util.hash = function () {
-    return 1;
-};
 var data = require('../unist-util-data');
 
 function createPositionValue(node) {
@@ -196,7 +193,7 @@ function one(node, map) {
         return a+b;
     });
 
-    // hash = createUniqueHash(hash, map);
+    hash = createUniqueHash(hash, map);
 
     // node.hash = createUniqueHash(hash, map);
     // if(node.type !== 'root') {

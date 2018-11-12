@@ -13,8 +13,10 @@ function data(node, options) {
     if(node.data.plugin && plugins.hasOwnProperty(node.data.plugin)) {
         const plugin = plugins[node.data.plugin];
         if(plugin.component) {
-            node.type = 'component';
-            node.component = plugin.component;
+            // node.type = 'component';
+            // node.component = plugin.component;
+            node.type = 'element';
+            node.tagName = plugin.component;
         }
     }
 
@@ -37,6 +39,10 @@ function data(node, options) {
         if( !node.data.attrs.hasOwnProperty('id') ) {
             node.data.attrs.id = node.hash;
         }
+    }
+
+    if (node.data.hasOwnProperty('hash')){
+        node.data.ref = node.data.hash;
     }
 
     // if (node.type !== 'root' && node.data.hasOwnProperty('hash')){

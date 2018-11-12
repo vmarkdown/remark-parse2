@@ -88,6 +88,15 @@ const app = new Vue({
         app.update(require('../md/test.md'));
     }, 0);
 
+    setTimeout(function () {
+        var dom = app.$refs['41243535'];
+
+        console.log(dom);
+
+        dom.style.backgroundColor = '#38323261';
+    }, 1000);
+
+
     // setTimeout(function () {
     //     app.update(require('../md/test1.md'));
     // }, 5000);
