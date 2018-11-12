@@ -65,7 +65,13 @@ function isCloseTag(str, strict) {
 }
 
 function equalCloseTag(tagName, str) {
-    return tagName === str.replace(' ', '');
+    // return tagName === str.replace(/[\r\n]\s*$/g, '');
+    var match0 = tagName.match(closeTag);
+    var match1 = str.match(closeTag);
+    if(match0 && match1){
+        return match0[0].replace(/[ |<|\/|>]/g, '') === match1[0].replace(/[ |<|\/|>]/g, '');
+    }
+    return false;
 }
 
 

@@ -38,7 +38,7 @@ var schema = merge(gh, {
     "clobberPrefix": "",
     tagNames: ['input'],
     attributes: {
-        '*': ['className']
+        '*': ['className', 'style']
     }
 });
 
@@ -111,7 +111,17 @@ exports.plugins = [
 
     // clean,
 
+
+
     [sanitize, schema],
+
+    // function () {
+    //     return function (root, file) {
+    //         // console.log('root1');
+    //         // console.log(root);
+    //         debugger
+    //     }
+    // },
 
     // hash,
 
