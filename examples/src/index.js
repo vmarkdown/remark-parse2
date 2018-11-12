@@ -8,7 +8,8 @@ const processor = unified().use(parse).use(vdom).freeze();
 
 
 const plugins = {
-    'vremark-plugin-math': require('./plugins/vremark-plugin-math')
+    'vremark-plugin-math': require('./plugins/vremark-plugin-math'),
+    'vremark-plugin-highlight': require('./plugins/vremark-plugin-highlight')
 };
 
 const app = new Vue({
@@ -108,9 +109,9 @@ const app = new Vue({
     }, 0);
 
 
-    setTimeout(function () {
-        app.update(md.replace('Markdown简介','====='));
-    }, 5000);
+    // setTimeout(function () {
+    //     app.update(md.replace('Markdown简介','====='));
+    // }, 5000);
 
     // setTimeout(function () {
     //     app.update(require('../md/test1.md'));

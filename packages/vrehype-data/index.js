@@ -1,7 +1,7 @@
 var visit = require('unist-util-visit');
 var xtend = require('xtend');
 
-function data(node, options) {
+function data(node, index, parent, options) {
 
     if(!node.properties && !node.data) {
         return;
@@ -29,10 +29,14 @@ function data(node, options) {
     if(node.data.plugin && plugins.hasOwnProperty(node.data.plugin)) {
         const plugin = plugins[node.data.plugin];
         if(plugin.component) {
-            // node.type = 'component';
-            // node.component = plugin.component;
-            node.type = 'element';
-            node.tagName = plugin.component;
+            if( node.tagName === "code" && parent.tagName === "pre" ) {
+                Object.assign(parent, node);
+                parent.type = 'element';
+                parent.tagName = plugin.name;
+                parent.children = [];
+            }
+            // node.type = 'element';
+            // node.tagName = plugin.name || plugin.component.name || plugin.component;
         }
     }
 
@@ -112,8 +116,8 @@ module.exports = function plugin(options = {}) {
 
     return function transformer(root) {
         console.time('data');
-        visit(root, function (node) {
-            data(node, settings);
+        visit(root, function (node, index, parent) {
+            data(node, index, parent, settings);
         });
         console.timeEnd('data');
     };

@@ -19,6 +19,28 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.css$/,
+                use: [
+                    "style-loader",
+                    "css-loader"
+                ]
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    {
+                        loader: "style-loader/useable" ,
+                        options: {
+                            // singleton: true,
+                            // attrs: {}
+                        }
+                    },
+                    {
+                        loader: "css-loader"
+                    }
+                ]
+            },
+            {
                 test: /\.md$/,
                 use: 'text-loader'
             }
