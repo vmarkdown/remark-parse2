@@ -5,7 +5,7 @@ const externalLinks = require('../packages/remark-external-links');
 const toc = require('../packages/vremark-toc');
 const footnote = require('../packages/vremark-footnote');
 const breaks = require('remark-breaks');
-// const hash = require('../packages/remark-hash');
+const hash = require('../packages/vremark-hash');
 
 const remark2rehype = require('remark-rehype');
 
@@ -26,7 +26,7 @@ const raw = require('../packages/vrehype-raw');
 const clean = require('../packages/rehype-clean');
 const sanitize = require('rehype-sanitize');
 const data = require('../packages/vrehype-data');
-const hash = require('../packages/vrehype-hash');
+// const hash = require('../packages/vrehype-hash');
 
 // const vdom = require('../packages/rehype-vdom');
 
@@ -41,11 +41,6 @@ var schema = merge(gh, {
         '*': ['className']
     }
 });
-
-// var toc = require('mdast-util-toc');
-// var toc = require('remark-toc');
-
-
 
 exports.settings = {};
 
@@ -90,13 +85,13 @@ exports.plugins = [
     chart,
     highlight,
 
+    hash,
+
     function () {
         return function (root, file) {
             file.mdast = root;
         }
     },
-
-    // hash,
 
     // rehype
     [remark2rehype, {
@@ -118,7 +113,7 @@ exports.plugins = [
 
     [sanitize, schema],
 
-    hash,
+    // hash,
 
     data,
 

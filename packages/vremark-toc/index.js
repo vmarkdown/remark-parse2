@@ -37,6 +37,7 @@ module.exports = function plugin(options = {}) {
                         id: node.__id__
                     }
                 });
+                delete node.__id__;
             }
         });
 
