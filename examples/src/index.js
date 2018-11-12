@@ -3,14 +3,19 @@ const md = require('../md/test.md');
 const Vue = require('vue').default;
 const parse = require('../../index');
 const vdom = require('../../packages/rehype-vdom');
-
 const processor = unified().use(parse).use(vdom).freeze();
 
+const plugins = {};
+[
+    require('./plugins/vremark-plugin-math'),
+    require('./plugins/vremark-plugin-highlight')
+].map(function (plugin) {
+    plugin.register(Vue);
+    plugins[plugin.name] = {
+        component: plugin.component.name
+    }
+});
 
-const plugins = {
-    'vremark-plugin-math': require('./plugins/vremark-plugin-math'),
-    'vremark-plugin-highlight': require('./plugins/vremark-plugin-highlight')
-};
 
 const app = new Vue({
     el: '#app',

@@ -6,7 +6,10 @@ function loading(h) {
 
 }
 
-Vue.component('vremark-component-math', {
+// Vue.component('vremark-component-math', );
+
+module.exports = {
+    name: 'vremark-component-math',
     props: {
         'code': {
             type: String,
@@ -50,5 +53,4 @@ Vue.component('vremark-component-math', {
                 })
             ]);
     }
-});
-
+};

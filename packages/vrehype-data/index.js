@@ -26,19 +26,6 @@ function data(node, index, parent, options) {
         classes = classes.concat(node.data['class']);
     }
 
-    if(node.data.plugin && plugins.hasOwnProperty(node.data.plugin)) {
-        const plugin = plugins[node.data.plugin];
-        if(plugin.component) {
-            if( node.tagName === "code" && parent.tagName === "pre" ) {
-                Object.assign(parent, node);
-                parent.type = 'element';
-                parent.tagName = plugin.name;
-                parent.children = [];
-            }
-            // node.type = 'element';
-            // node.tagName = plugin.name || plugin.component.name || plugin.component;
-        }
-    }
 
     const properties = Object.assign({}, node.properties);
 
@@ -108,6 +95,22 @@ function data(node, index, parent, options) {
     if(Object.keys(classes).length > 0) {
         node.data['class'] = classes;
     }
+
+    if(node.data.plugin && plugins.hasOwnProperty(node.data.plugin)) {
+        const plugin = plugins[node.data.plugin];
+        if(plugin.component) {
+            if( node.tagName === "code" && parent.tagName === "pre" ) {
+                Object.assign(parent, node);
+                parent.type = 'element';
+                parent.tagName = plugin.component;
+                parent.children = [];
+            }
+            // node.type = 'element';
+            // node.tagName = plugin.name || plugin.component.name || plugin.component;
+        }
+    }
+
+
 }
 
 

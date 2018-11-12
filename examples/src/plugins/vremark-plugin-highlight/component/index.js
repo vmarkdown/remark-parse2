@@ -1,5 +1,3 @@
-const Vue = require('vue').default;
-
 // const { hljs } = require('vremark-plugin-highlight-libs');
 const hljs = require('highlight.js');
 // require('./index.css');
@@ -28,8 +26,8 @@ function format(html) {
     }).join('');
 }
 
-Vue.component('vremark-plugin-highlight', {
-    name: 'vremark-plugin-highlight',
+module.exports = {
+    name: 'vremark-component-highlight',
     props: {
         'lang': {
             type: String,
@@ -195,4 +193,4 @@ Vue.component('vremark-plugin-highlight', {
 
 
     }
-});
+};
