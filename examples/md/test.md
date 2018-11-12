@@ -1,27 +1,14 @@
-# Markdown Syntax
+## LaTeX
 
-## Fenced Code Blocks
+The editor converts LaTeX equations in double-dollars `$$`: $$ax^2+bx+c=0$$. All equations are rendered as block equations. If you need inline ones, you can add the prefix `\inline`: $$\inline p={1\over q}$$. But it is a good practice to place big equations on separate lines:
 
+$$
+x_{1,2} = {-b\pm\sqrt{b^2 - 4ac} \over 2a}.
+$$
 
-<div style="text-align:center;">
+In this case the LaTeX syntax will be highlighted in the source code. You can even add equation numbers (unfortunately there is no automatic numbering and refs support):
 
-The following code block uses syntax highlighting for Python:
+$$
+|\vec{A}|=\sqrt{A_x^2 + A_y^2 + A_z^2}.
+$$(1)
 
-``` python
-@requires_authorization
-def somefunc(param1='', param2=0):
-    '''A docstring'''
-    if param1 > param2: # interesting
-        print 'Greater'
-    return (param2 - param1 + 1) or None
-class SomeClass:
-    pass
->>> message = '''interpreter
-... prompt'''
-```
-
-</div>
-
-
-
-## Lists

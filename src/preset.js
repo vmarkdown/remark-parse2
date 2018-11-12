@@ -9,8 +9,8 @@ const hash = require('../packages/vremark-hash');
 
 const remark2rehype = require('remark-rehype');
 
-// const math = require('../packages/remark-math');
-const math = require('@paperist/remark-math');
+const math = require('../packages/remark-math');
+// const math = require('@paperist/remark-math');
 const vmath = require('../packages/vremark-math');
 const katex = require('../packages/vremark-katex');
 const flowchart = require('../packages/vremark-flowchart');
