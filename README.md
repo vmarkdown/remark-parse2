@@ -29,4 +29,4 @@ process.stdin
 
 ### math
 
-[upmath](https://upmath.me/)
+(upmath)[https://upmath.me/]
