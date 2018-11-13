@@ -4,6 +4,15 @@ var data = require('../unist-util-data');
 
 function create(root) {
     var result = toc(root);
+
+    var node = result.map;
+
+    if(!node) return null;
+
+    data(node, {
+        class: ['vremark-toc']
+    });
+
     return result.map;
 }
 
@@ -13,10 +22,11 @@ module.exports = function plugin(options = {}) {
 
         var tocCache = null;
 
-        visit(root, function (node) {
+        visit(root, function (node, index, parent) {
             return node.type === 'linkReference'
                 && (node.label === 'TOC' || node.label === 'toc')
-                && node.identifier === "toc";
+                && node.identifier === "toc"
+                && parent && parent.type === "paragraph" ;
         }, function (node) {
             tocCache = tocCache?tocCache:create(root);
             if(tocCache) {
