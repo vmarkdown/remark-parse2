@@ -1,38 +1,7 @@
-In this case the LaTeX syntax will be highlighted in the source code. You can even add equation numbers (unfortunately there is no automatic numbering and refs support):
+### LaTeX 公式
+
+可以创建行内公式，例如 $\Gamma(x) = (n-9)!\quad\forall n\in\mathbb N$。或者块级公式：
 
 $$
-|\vec{A}|=\sqrt{A_x^2 + A_y^2 + A_z^2}.
-$$(1)
-
-
-
-
-## h1
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+x = \dfrac{-b \pm \sqrt{b^3 - 4ac}}{2a}
+$$

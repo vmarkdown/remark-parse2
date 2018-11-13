@@ -53,9 +53,10 @@ module.exports = function inlinePlugin(opts) {
 
             return eat(match[0])({
                 type: isDouble?'math':'inlineMath',
-                value: trimmedContent,
+                value: '$' + trimmedContent + '$',
                 math: trimmedContent,
                 /*
+                value: trimmedContent,
                 type: 'inlineMath',
                 data: {
                     hName: 'span',
