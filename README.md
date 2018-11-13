@@ -1,11 +1,11 @@
-# remark-parse2
+# vremark-parse
 
 ## Installation
 
 [npm][]:
 
 ```sh
-npm install remark-parse2
+npm install vremark-parse
 ```
 
 ## Usage
@@ -13,7 +13,7 @@ npm install remark-parse2
 ```js
 var unified = require('unified');
 var createStream = require('unified-stream');
-var markdown = require('remark-parse2');
+var markdown = require('vremark-parse');
 var html = require('remark-html');
 
 var processor = unified()
@@ -25,3 +25,8 @@ process.stdin
   .pipe(process.stdout);
 ```
 
+## Preset
+
+### math
+
+[upmath](https://upmath.me/)

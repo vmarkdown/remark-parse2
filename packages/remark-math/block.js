@@ -1,6 +1,3 @@
-var latexBlock = /[ \t]*\$\$\n?(?:[^\n]+\n)*(?:[^\n]*[^\\\n])?\$\$(?:[ \t]*\([ \t]*\S+[ \t]*\))?[ \t]*(?:\n|$)/;
-
-
 var trim = require('trim-trailing-lines')
 
 var C_NEWLINE = '\n'
@@ -12,13 +9,20 @@ var MIN_FENCE_COUNT = 2
 var CODE_INDENT_COUNT = 4
 
 module.exports = function blockPlugin(opts) {
-
     function blockTokenizer(eat, value, silent) {
-
-        var length = value.length + 1;
-        var index = 0;
-        var subvalue = '';
-        var character;
+        var length = value.length + 1
+        var index = 0
+        var subvalue = ''
+        var fenceCount
+        var marker
+        var character
+        var queue
+        var content
+        var exdentedContent
+        var closing
+        var exdentedClosing
+        var indent
+        var now
 
         /* Eat initial spacing. */
         while (index < length) {
@@ -32,42 +36,174 @@ module.exports = function blockPlugin(opts) {
             index++
         }
 
+        indent = index
+
         /* Eat the fence. */
-        character = value.charAt(index);
+        character = value.charAt(index)
 
         if (character !== C_DOLLAR) {
             return
         }
 
-        subvalue = value.match(latexBlock);
+        index++
+        marker = character
+        fenceCount = 1
+        subvalue += character
 
-        if (!subvalue) {
-            return;
+        while (index < length) {
+            character = value.charAt(index)
+
+            if (character !== marker) {
+                break
+            }
+
+            subvalue += character
+            fenceCount++
+            index++
         }
+
+        if (fenceCount < MIN_FENCE_COUNT) {
+            return
+        }
+
+        /* Eat everything after the fence. */
+        while (index < length) {
+            character = value.charAt(index)
+
+            if (character === C_NEWLINE) {
+                break
+            }
+            if (character === C_DOLLAR) {
+                return
+            }
+
+            subvalue += character
+            index++
+        }
+
+        character = value.charAt(index)
 
         if (silent) {
-            return true;
+            return true
         }
 
-        subvalue = subvalue[0];
+        now = eat.now()
+        now.column += subvalue.length
+        now.offset += subvalue.length
 
-        var checkLastDouble = subvalue.lastIndexOf('$$');
-        if(checkLastDouble>-1) {
-            subvalue = subvalue.substring(0, checkLastDouble + 2);
+        queue = closing = exdentedClosing = content = exdentedContent = ''
+
+        /* Eat content. */
+        while (index < length) {
+            character = value.charAt(index)
+            content += closing
+            exdentedContent += exdentedClosing
+            closing = exdentedClosing = ''
+
+            if (character !== C_NEWLINE) {
+                content += character
+                exdentedClosing += character
+                index++
+                continue
+            }
+            /* new start */
+            else {
+
+                if( content && content.endsWith('$$') ) {
+                    break
+                }
+
+            }
+            /* new end */
+
+            /* Add the newline to `subvalue` if its the first
+            * character.  Otherwise, add it to the `closing`
+            * queue. */
+            if (content) {
+                closing += character
+                exdentedClosing += character
+            } else {
+                subvalue += character
+            }
+
+            queue = ''
+            index++
+
+            while (index < length) {
+                character = value.charAt(index)
+
+                if (character !== C_SPACE) {
+                    break
+                }
+
+                queue += character
+                index++
+            }
+
+            closing += queue
+            exdentedClosing += queue.slice(indent)
+
+            if (queue.length >= CODE_INDENT_COUNT) {
+                continue
+            }
+
+            queue = ''
+
+            while (index < length) {
+                character = value.charAt(index)
+
+                if (character !== marker) {
+                    break
+                }
+
+                queue += character
+                index++
+            }
+
+            closing += queue
+            exdentedClosing += queue
+
+            if (queue.length < fenceCount) {
+                continue
+            }
+
+            queue = ''
+
+            while (index < length) {
+                character = value.charAt(index)
+
+                if (character === C_NEWLINE) {
+                    break
+                }
+
+                closing += character
+                exdentedClosing += character
+                index++
+            }
+
+            break
         }
 
-        var trimmedContent = trim(subvalue);
-        if(trimmedContent) {
-            var fromIndex = trimmedContent.startsWith('$$')?2:0;
-            var toIndex = trimmedContent.endsWith('$$')?trimmedContent.length-2:trimmedContent.length;
-            trimmedContent = trimmedContent.substring(fromIndex , toIndex);
+        // debugger
+        subvalue += content + closing
+
+        /* old start */
+        // const trimmedContent = trim(exdentedContent)
+        /* old end */
+        /* new start */
+        let trimmedContent = trim(subvalue);
+        if(trimmedContent && /^\$\$[\s\S]+\$\$$/.test(trimmedContent) ) {
+            trimmedContent = trimmedContent.substring(2, trimmedContent.length-2);
         }
+        /* onewld end */
 
         return eat(subvalue)({
             type: 'math',
+            value: subvalue,
             math: trimmedContent,
+            /*
             value: trimmedContent,
-            /*data: {
+            data: {
                 hName: 'div',
                 hProperties: {
                     className: 'math'

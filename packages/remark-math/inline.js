@@ -55,7 +55,9 @@ module.exports = function inlinePlugin(opts) {
                 type: isDouble?'math':'inlineMath',
                 value: trimmedContent,
                 math: trimmedContent,
-                /*data: {
+                /*
+                type: 'inlineMath',
+                data: {
                     hName: 'span',
                     hProperties: {
                         className: 'inlineMath' + (isDouble && opts.inlineMathDouble ? ' inlineMathDouble' : '')
