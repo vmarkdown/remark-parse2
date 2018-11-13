@@ -7,6 +7,10 @@ var relative = /^[^/]+\/[^/].*$|^\/[^/].*$/
 var defaultTarget = '_blank'
 var defaultRel = ['nofollow', 'noopener', 'noreferrer']
 
+function isInlineLink(url) {
+    return url && url.charAt(0) === '#';
+}
+
 function externalLinks(options) {
     var opts = options || {}
     var target = opts.target
@@ -29,6 +33,7 @@ function externalLinks(options) {
     }
 
     function visitor(node) {
+
         var data
         var props
 
@@ -36,7 +41,7 @@ function externalLinks(options) {
         data = node.data || (node.data = {})
         props = data.hProperties || (data.hProperties = {})
 
-        if (target !== false) {
+        if (target !== false && !isInlineLink(node.url) ) {
             props.target = target || defaultTarget
         }
 
