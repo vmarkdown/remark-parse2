@@ -169,6 +169,14 @@ module.exports = function blockPlugin(opts) {
 
             queue = ''
 
+            /* new start */
+
+            if( closing && closing.endsWith('$$') ) {
+                break
+            }
+
+            /* new end */
+
             while (index < length) {
                 character = value.charAt(index)
 
