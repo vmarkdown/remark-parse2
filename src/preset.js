@@ -1,5 +1,7 @@
 // const markdown = require('../packages/remark-parse');
 const markdown = require('remark-parse');
+const slug = require('remark-slug');
+
 const externalLinks = require('../packages/remark-external-links');
 
 const toc = require('../packages/vremark-toc');
@@ -35,7 +37,7 @@ const data = require('../packages/vrehype-data');
 var merge = require('deepmerge').default;
 var gh = require('hast-util-sanitize/lib/github');
 var schema = merge(gh, {
-    // "clobberPrefix": "",
+    "clobberPrefix": "",
     tagNames: ['input'],
     attributes: {
         '*': ['className', 'style']
@@ -54,6 +56,8 @@ exports.plugins = [
         footnotes: true,
         pedantic: true
     }],
+
+    slug,
 
     [externalLinks, {/*,target: '_blank' rel: ['nofollow']*/}],
 

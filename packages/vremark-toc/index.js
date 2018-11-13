@@ -1,9 +1,9 @@
 var visit = require('unist-util-visit');
 var toc = require('./mdast-util-toc');
 var data = require('../unist-util-data');
-var toString = require('mdast-util-to-string');
-var slugger = require('../util/slugger');
-var visitChildren = require('unist-util-visit-children');
+// var toString = require('mdast-util-to-string');
+// var slugger = require('../util/slugger');
+// var visitChildren = require('unist-util-visit-children');
 
 function create(root) {
     var result = toc(root);
@@ -63,7 +63,7 @@ module.exports = function plugin(options = {}) {
 
 
 
-        console.time('toc');
+
         // visit(root, function (node) {
         //     return node.type ==='link' && node.url && node.url.charAt(0) === '#';
         // }, function (link) {
@@ -81,6 +81,8 @@ module.exports = function plugin(options = {}) {
         //     });
         // });
 
+        /*
+        console.time('toc');
         var headings = {};
 
         visitChildren(function (node) {
@@ -119,7 +121,7 @@ module.exports = function plugin(options = {}) {
         })(root);
 
         console.timeEnd('toc');
-
+        */
 
 
 
