@@ -1,5 +1,6 @@
 // const markdown = require('../packages/remark-parse');
 const markdown = require('remark-parse');
+const vparse = require('../packages/vremark-parse');
 const slug = require('remark-slug');
 
 const externalLinks = require('../packages/remark-external-links');
@@ -56,6 +57,8 @@ exports.plugins = [
         footnotes: true,
         pedantic: true
     }],
+
+    vparse,
 
     slug,
 
