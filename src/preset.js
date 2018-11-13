@@ -35,7 +35,7 @@ const data = require('../packages/vrehype-data');
 var merge = require('deepmerge').default;
 var gh = require('hast-util-sanitize/lib/github');
 var schema = merge(gh, {
-    "clobberPrefix": "",
+    // "clobberPrefix": "",
     tagNames: ['input'],
     attributes: {
         '*': ['className', 'style']

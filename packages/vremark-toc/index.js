@@ -1,6 +1,9 @@
 var visit = require('unist-util-visit');
 var toc = require('./mdast-util-toc');
 var data = require('../unist-util-data');
+var toString = require('mdast-util-to-string');
+var slugger = require('../util/slugger');
+var visitChildren = require('unist-util-visit-children');
 
 function create(root) {
     var result = toc(root);
@@ -14,6 +17,10 @@ function create(root) {
     });
 
     return result.map;
+}
+
+function equalHead(head, link) {
+    return slugger(head) === slugger(link);
 }
 
 module.exports = function plugin(options = {}) {
@@ -50,6 +57,79 @@ module.exports = function plugin(options = {}) {
                 delete node.__id__;
             }
         });
+
+
+        //=======================================================
+
+
+
+        console.time('toc');
+        // visit(root, function (node) {
+        //     return node.type ==='link' && node.url && node.url.charAt(0) === '#';
+        // }, function (link) {
+        //
+        //     var ref = link.url.substring(1);
+        //
+        //     visit(root, function (node) {
+        //         return node.type ==='heading' && equalHead(toString(node),ref);
+        //     }, function (heading) {
+        //         data(heading, {
+        //             attrs: {
+        //                 id: ref
+        //             }
+        //         });
+        //     });
+        // });
+
+        var headings = {};
+
+        visitChildren(function (node) {
+            if(node.type!=='heading') {
+                return
+            }
+            var _slugger = slugger(toString(node));
+            headings[_slugger] = node;
+        })(root);
+
+        visitChildren(function (list) {
+
+            if(list.type!=='list') {
+                return
+            }
+
+            visit(list, function (node) {
+                return node.type ==='link' && node.url && node.url.charAt(0) === '#';
+            }, function (link) {
+
+                var ref = link.url.substring(1);
+                var _slugger = slugger(ref);
+
+                if(headings[_slugger]) {
+
+                    data(headings[_slugger], {
+                        attrs: {
+                            id: ref
+                        }
+                    });
+
+                }
+
+            });
+
+        })(root);
+
+        console.timeEnd('toc');
+
+
+
+
+
+
+
+
+
+
+
 
         return root;
     }
