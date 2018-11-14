@@ -6,6 +6,28 @@ var thematicBreak = require('./handlers/thematic-break')
 var list = require('./handlers/list')
 var wrap = require('./wrap')
 
+/* new start */
+// var visit = require('unist-util-visit');
+function createHash(root) {
+    // visit(root, function (node) {
+    //     return node.data && node.data.hData && node.data.hData.hash;
+    // }, function (node) {
+    //     debugger
+    // })
+
+    var children = root.children;
+
+    var hashs = children.map(function (node) {
+        return (node.type === "paragraph" && node.data && node.data.hData && node.data.hData.hash)?node.data.hData.hash:0;
+    });
+
+    return [].concat(hashs).reduce(function (a, b) {
+        return a+b;
+    })
+
+}
+/* new end */
+
 function generateFootnotes(h) {
     var footnotes = h.footnotes
     var length = footnotes.length
@@ -27,7 +49,7 @@ function generateFootnotes(h) {
 
         listItems[index] = {
             type: 'listItem',
-            data: {hProperties: {id: 'fn-' + def.identifier}},
+            data: {hProperties: {id: 'fn-' + def.identifier},hData:{}},
             children: def.children.concat({
                 type: 'link',
                 url: '#fnref-' + def.identifier,
@@ -43,6 +65,9 @@ function generateFootnotes(h) {
             position.start =  def.position.start;
         }
         position.end = def.position.end;
+
+        listItems[index].data.hData.hash = createHash(listItems[index]);
+
         /* new end */
 
     }
@@ -53,7 +78,21 @@ function generateFootnotes(h) {
         /* old end */
 
         /* new start */
-        position,
+        {
+            position: position,
+            data:{
+                hData:{
+                    hash: (function () {
+                        return (listItems.length === 0) ? 0 :listItems.map(function (node) {
+                            return (node.data && node.data.hData && node.data.hData.hash)?node.data.hData.hash:0;
+                        }).reduce(function (a, b) {
+                            return a+b;
+                        });
+                    })()
+                }
+            }
+
+        },
         /* new end */
 
 
