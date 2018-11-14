@@ -6,6 +6,49 @@ var u = require('unist-builder')
 var wrap = require('../wrap')
 var all = require('../all')
 
+
+/* new start */
+
+function createInputPosition(container, node) {
+    var children = container;
+
+    if(!children||children.length===0||children[0].type !== 'text'){
+        return node.position;
+    }
+
+    var position = Object.assign({}, children[0].position);
+
+    Object.assign(position.end, position.start);
+    Object.assign(position.start, {
+        column: position.end.column - 3,
+        offset: position.end.offset - 3
+    });
+
+    return position;
+}
+
+function createTextPosition(container, node) {
+
+    var children = container;
+
+    if(!children||children.length===0||children[0].type !== 'text'){
+        return node.position;
+    }
+
+    var position = Object.assign({}, children[0].position);
+
+    Object.assign(position.end, position.start);
+    Object.assign(position.start, {
+        column: position.end.column - 1,
+        offset: position.end.offset - 1
+    });
+
+    return position;
+}
+
+/* new end */
+
+
 function listItem(h, node, parent) {
     var children = node.children
     var head = children[0]
@@ -37,7 +80,7 @@ function listItem(h, node, parent) {
             /* old end */
 
             /* new start */
-            container.unshift(u('text', {position: node.position},' '))
+            container.unshift(u('text', {position: createTextPosition(container, node)},' '))
             /* new end */
         }
 
@@ -52,9 +95,10 @@ function listItem(h, node, parent) {
             */
             /* old end */
 
+
             /* new start */
             h({
-                position: node.position
+                position: createInputPosition(container, node)
             }, 'input', {
                 type: 'checkbox',
                 checked: node.checked,

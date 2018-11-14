@@ -1,3 +1,5 @@
+var visit = require('unist-util-visit');
+
 const unified = require('unified');
 const md = require('../md/test.md');
 const Vue = require('vue').default;
@@ -61,6 +63,14 @@ const app = new Vue({
             console.log(file.mdast);
             console.log(file.hast);
             console.log(this.vdom);
+
+
+            // visit(file.hast, function (node) {
+            //     return node.type === 'element' && node.tagName === 'input';
+            // }, function (node) {
+            //    var position = node.position;
+            //    console.log(md.substring(position.start.offset, position.end.offset))
+            // });
 
             this.$forceUpdate();
         }
