@@ -17,6 +17,11 @@ function generateFootnotes(h) {
         return null
     }
 
+
+    /* new start */
+    var position = {};
+    /* new end */
+
     while (++index < length) {
         def = footnotes[index]
 
@@ -31,10 +36,27 @@ function generateFootnotes(h) {
             }),
             position: def.position
         }
+
+
+        /* new start */
+        if(!position.start) {
+            position.start =  def.position.start;
+        }
+        position.end = def.position.end;
+        /* new end */
+
     }
 
     return h(
-        null,
+        /* old start */
+        // null,
+        /* old end */
+
+        /* new start */
+        position,
+        /* new end */
+
+
         'div',
         {className: ['footnotes']},
         wrap(
