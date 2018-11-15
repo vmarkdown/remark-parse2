@@ -1,7 +1,7 @@
 var visit = require('unist-util-visit');
 
 const unified = require('unified');
-const md = require('../md/test.md');
+const md = require('../md/test.html');
 const Vue = require('vue').default;
 const parse = require('../../index');
 const vdom = require('../../packages/rehype-vdom');

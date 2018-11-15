@@ -44,7 +44,7 @@ var merge = require('deepmerge').default;
 var gh = require('hast-util-sanitize/lib/github');
 var schema = merge(gh, {
     "clobberPrefix": "",
-    tagNames: ['input'],
+    tagNames: ['input', 'span', 'svg', 'rect'],
     attributes: {
         '*': ['className', 'style']
     }
@@ -113,16 +113,12 @@ exports.plugins = [
         allowDangerousHTML: true
     }],
 
-    // function () {
-    //     return function (root, file) {
-    //         // console.log('root1');
-    //         // console.log(root);
-    //         debugger
-    //     }
-    // },
+
     clean,
 
     raw,
+
+
 
     // clean,
 

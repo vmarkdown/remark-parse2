@@ -74,7 +74,6 @@ function equalCloseTag(tagName, str) {
     return false;
 }
 
-
 function getList(root) {
 
     const children = root.children;
@@ -82,6 +81,10 @@ function getList(root) {
     let index = 0;
 
     const list = [];
+
+    if(!children || children.length === 0){
+        return list;
+    }
 
     while (index<children.length) {
 
@@ -208,11 +211,73 @@ function processLevel1(root){
 
 }
 
+function process(root, depth){
+
+    if(depth > 1) return;
+
+    if(!root.children){
+        return;
+    }
+
+    const children = root.children;
+
+    const list = getList(root);
+
+    for(let i=0;i<list.length;i++) {
+
+        const node = list[i];
+
+        const create = node.start.hast;
+        const position = createPosition(node.start.node, node.end.node);
+        create.position = position;
+
+        for(let j=node.start.index;j<=node.end.index;j++) {
+            // children[j].__remove__ = true;
+            // const cloneNode = Object.assign({}, children[j]);
+            // children[j].__remove__ = true;
+
+            if(j===node.start.index) {
+                continue;
+            }
+
+            children[j].__remove__ = true;
+
+            if(j===node.end.index) {
+                continue;
+            }
+
+            create.children.push(children[j]);
+        }
+
+        Object.assign(node.start.node, create);
+        delete node.start.node.value;
+    }
+
+    root.children = root.children.filter(function (node) {
+        return !node.__remove__;
+    });
+
+    for(let m = 0;m<root.children.length;m++) {
+        const node0 = root.children[m];
+        // if(!node0.children) {
+        //     continue;
+        // }
+        process(node0, depth + 1);
+        // for(let n = 0;n<node0.children.length;n++) {
+        //     const node1 = node0.children[n];
+        //     process(node1, depth + 1);
+        // }
+    }
+
+}
+
+
 module.exports = function plugin(options = {}) {
 
     return function transform(root) {
-        processLevel0(root);
-        processLevel1(root);
+        // processLevel0(root);
+        // processLevel1(root);
+        process(root, 0);
         return root;
     }
 };

@@ -41,7 +41,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.md$/,
+                test: /\.(md|html)$/,
                 use: 'text-loader'
             }
         ]
