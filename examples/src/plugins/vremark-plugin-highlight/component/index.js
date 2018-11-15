@@ -44,6 +44,10 @@ module.exports = {
         'theme': {
             type: String,
             default: 'default'
+        },
+        'attrs': {
+            type: Object,
+            default: {}
         }
     },
     data() {

@@ -54,6 +54,7 @@
   "dependencies": {
     "deepmerge": "^2.2.1",
     "emoji-regex": "^7.0.1",
+    "md-attr-parser": "^1.2.0",
     "mdast-util-toc": "^3.0.0",
     "rehype-parse": "^5.0.0",
     "rehype-sanitize": "^2.0.1",

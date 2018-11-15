@@ -6,11 +6,15 @@ const slug = require('remark-slug');
 const externalLinks = require('../packages/remark-external-links');
 
 const toc = require('../packages/vremark-toc');
+const codeMeta = require('../packages/vremark-code-meta');
+
 const footnote = require('../packages/vremark-footnote');
 const breaks = require('remark-breaks');
 const hash = require('../packages/vremark-hash');
 
+
 const remark2rehype = require('remark-rehype');
+
 
 const math = require('../packages/remark-math');
 // const math = require('@paperist/remark-math');
@@ -68,6 +72,8 @@ exports.plugins = [
     [toc, {
 
     }],
+
+    codeMeta,
 
     // function () {
     //     return function (root, file) {
