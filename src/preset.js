@@ -21,6 +21,7 @@ const sequence = require('../packages/vremark-sequence');
 const mermaid = require('../packages/vremark-mermaid');
 const g2 = require('../packages/vremark-g2');
 const chart = require('../packages/vremark-chart');
+const resume = require('../packages/vremark-resume');
 const highlight = require('../packages/vremark-highlight');
 
 
@@ -90,6 +91,7 @@ exports.plugins = [
     mermaid,
     g2,
     chart,
+    resume,
     highlight,
 
     hash,
