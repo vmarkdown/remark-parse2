@@ -139,8 +139,12 @@ function getValues(node) {
             break;
         }
         default: {
-            // node.value && values.push(node.value);
-            // values.push(createPostionValue(node));
+            if (node.value) {
+                values.push(node.value);
+            }
+            else {
+                values.push(createPositionValue(node));
+            }
         }
     }
     return values;

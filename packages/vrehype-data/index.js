@@ -48,7 +48,7 @@ function data(node, index, parent, options) {
     else {
         if( node.data.hash ){
             node.data.ref = node.data.hash;
-            if(node.tagName !== "br") {
+            if(node.tagName !== "br" && node.tagName !== "hr") {
                 node.data.key = node.data.hash;
             }
             delete node.data.hash;
