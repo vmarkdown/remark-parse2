@@ -14,5 +14,11 @@ function code(h, node) {
         props.className = ['language-' + lang]
     }
 
-    return h(node.position, 'pre', [h(node, 'code', props, [u('text', value)])])
+    /* old start */
+    // return h(node.position, 'pre', [h(node, 'code', props, [u('text', value)])])
+    /* old end */
+
+    /* new start */
+    return h(node, 'pre', [h(node, 'code', props, [u('text', value)])])
+    /* new end */
 }

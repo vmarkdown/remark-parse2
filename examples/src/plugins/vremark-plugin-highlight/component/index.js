@@ -47,7 +47,9 @@ module.exports = {
         },
         'attrs': {
             type: Object,
-            default: {}
+            default: function () {
+                return {}
+            }
         }
     },
     data() {
