@@ -36,41 +36,55 @@ const vdom = require('../../packages/rehype-vdom');
 //     });
 // }
 
-const _plugins = {};
-[
-    require('./plugins/vremark-plugin-math'),
-    require('./plugins/vremark-plugin-highlight')
-].map(function (plugin) {
-    plugin.register(Vue);
-    _plugins[plugin.name] = plugin;
-});
+// const _plugins = {};
+// [
+//     require('./plugins/vremark-plugin-math'),
+//     require('./plugins/vremark-plugin-highlight')
+// ].map(function (plugin) {
+//     plugin.register(Vue);
+//     _plugins[plugin.name] = plugin;
+// });
+
+
+function loader(name) {
+    return new Promise(function (resolve, reject) {
+        // requirejs([name], function (plugin) {
+        //     resolve(plugin)
+        // }, function () {
+        //     reject();
+        // });
+
+        let Plugin = null;
+        if(name === 'vremark-plugin-math') {
+            Plugin = require('./plugins/vremark-plugin-math');
+        }
+        else if(name === 'vremark-plugin-highlight') {
+            Plugin = require('./plugins/vremark-plugin-highlight');
+        }
+
+        // if(Plugin){
+        //     Plugin.Vue = Vue;
+        // }
+
+        resolve( Plugin );
+
+        // if(Plugin && Plugin.init){
+        //     Plugin.init();
+        // }
+        // if(Plugin && Plugin.component){
+        //     Vue.component(Plugin.component.name, Plugin.component);
+        // }
+
+        // resolve( Plugin );
+
+    });
+}
+
 
 
 const app = new Vue({
     el: '#app',
     methods: {
-        refresh0() {
-            const h = this.$createElement;
-            this.vdom = h('div', {}, [
-                h('div', {key: 1}, '1======='),
-                h('div', {key: 2}, '2======='),
-                h('div', {key: 3}, '3======='),
-                h('div', {key: 4}, '4======='),
-                h('div', {key: 5}, '5======='),
-            ]);
-            this.$forceUpdate();
-        },
-        refresh1() {
-            const h = this.$createElement;
-            this.vdom = h('div', {}, [
-                h('div', {key: 1}, '1======='),
-                h('div', {key: 2}, '2======='),
-                h('div', {key: 31}, '3======='),
-                h('div', {key: 4}, '4======='),
-                h('div', {key: 5}, '5======='),
-            ]);
-            this.$forceUpdate();
-        },
         async update(md) {
             const h = this.$createElement;
             console.time('process');
@@ -81,8 +95,9 @@ const app = new Vue({
                         class: 'markdown-body'
                     }
                 },
+                Vue: Vue,
                 h:h,
-                plugins: _plugins
+                loader: loader
             });
             const file = await processor.process(md);
             console.timeEnd('process');

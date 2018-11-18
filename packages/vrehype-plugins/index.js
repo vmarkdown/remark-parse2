@@ -1,21 +1,30 @@
 var visit = require('unist-util-visit');
 var xtend = require('xtend');
+var plugins = {};
 
 function data(node, index, parent, options, plugin) {
+    // debugger
+    // if(!plugin.component) {
+    //     return;
+    // }
 
-    if(!plugin.component) {
+    // var component = plugin.component.name || plugin.component;
+
+    if( !node.data || !node.data.component ) {
         return;
     }
+
+    var component = node.data.component;
 
     if( node.tagName === "code" && parent.tagName === "pre" ) {
         Object.assign(parent, node);
         parent.type = 'element';
-        parent.tagName = plugin.component;
+        parent.tagName = component;
         parent.children = [];
     }
     else {
         node.type = 'element';
-        node.tagName = plugin.component;
+        node.tagName = component;
     }
 
 }
@@ -23,17 +32,64 @@ function data(node, index, parent, options, plugin) {
 module.exports = function plugin(options = {}) {
     var settings = xtend(options, this.data('settings'));
 
-    var plugins = settings.plugins || {};
+    var loader = settings.loader;
+    var Vue = settings.Vue;
 
-    return function transformer(root) {
-        console.time('plugins');
+    // var plugins = settings.plugins || {};
+
+    return function transformer(root, file, next) {
+        var temp_plugins = {};
+        // console.time('plugins');
         visit(root, function (node) {
-            return node.data && node.data.plugin && plugins[node.data.plugin];
+            return node.data && node.data.plugin;// && plugins[node.data.plugin];
         },function (node, index, parent) {
-            data(node, index, parent, settings, plugins[node.data.plugin]);
+            var plugin = node.data.plugin;
+            temp_plugins[plugin] = true;
+            data(node, index, parent, settings, plugin);
         });
-        console.timeEnd('plugins');
-        return root;
+        // console.timeEnd('plugins');
+
+
+        if(!loader){
+            next();
+            return;
+            // return root;
+        }
+
+        const loaders = Object.keys(temp_plugins).map(function (name) {
+            return plugins.hasOwnProperty(name)?plugins[name]:loader(name);
+        });
+
+        Promise.all(loaders).then(function (Plugins) {
+
+            Plugins && Plugins.length>0 && Plugins.forEach(function (Plugin) {
+                // plugins[Plugin.name] = Plugin;
+                if(!Plugin) {
+                    return;
+                }
+
+                try{
+                    // Plugin.Vue = Vue;
+                    if(Vue && Plugin.component) {
+                        Vue.component(Plugin.component.name, Plugin.component);
+                    }
+                    var plugin = new Plugin();
+                    plugin.install();
+                    plugins[Plugin.name] = plugin;
+                }
+                catch (e) {
+                    console.error(e);
+                }
+
+            });
+
+            next();
+        }).catch(function (e) {
+            console.error(e);
+            next();
+        });
+
+        // return root;
     };
 };
 

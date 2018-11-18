@@ -7,27 +7,51 @@ const themes = {
     'darcula':require('./themes/darcula.less')
 };
 
-let style = themes.default;
+// let style = themes.default;
+// module.exports = {
+//     name: 'vremark-plugin-highlight',
+//     component: require('./component'),
+//     register(Vue) {
+//         Vue.component(this.component.name, this.component);
+//     },
+//     setTheme(theme) {
+//         if( themes.hasOwnProperty(theme) ) {
+//             if(style) {
+//                 style.unuse();
+//             }
+//             style = themes[theme];
+//             style.use();
+//         }
+//     },
+//     init() {
+//         style.use();
+//     }
+// };
 
-module.exports = {
-    name: 'vremark-plugin-highlight',
-    component: require('./component'),
-    register(Vue) {
-        style.use();
-        Vue.component(this.component.name, this.component);
-    },
-    setTheme(theme) {
-        if( themes.hasOwnProperty(theme) ) {
-            if(style) {
-                style.unuse();
-            }
-            style = themes[theme];
-            style.use();
-        }
+const Plugin = require('../plugin');
+
+class HighlightPlugin extends Plugin {
+
+    constructor() {
+        super();
+        const self = this;
+        self.style = themes.default;
     }
-};
 
+    install() {
+        const self = this;
+        self.style.use();
+    }
 
+    uninstall() {
+        const self = this;
+        self.style.unuse();
+    }
+}
+
+HighlightPlugin.component = require('./component');
+
+module.exports = HighlightPlugin;
 
 
 // module.exports = {
