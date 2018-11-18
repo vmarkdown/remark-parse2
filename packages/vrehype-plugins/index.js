@@ -63,7 +63,7 @@ module.exports = function plugin(options = {}) {
 
         Plugins.forEach(function (Plugin) {
             if(!Plugin) {
-                return root;
+                return;
             }
 
             try{
