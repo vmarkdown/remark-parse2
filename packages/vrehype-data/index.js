@@ -96,23 +96,23 @@ function data(node, index, parent, options) {
         node.data['class'] = classes;
     }
 
-    if(node.data.plugin && plugins.hasOwnProperty(node.data.plugin)) {
-        const plugin = plugins[node.data.plugin];
-        if(plugin.component) {
-            if( node.tagName === "code" && parent.tagName === "pre" ) {
-                Object.assign(parent, node);
-                parent.type = 'element';
-                parent.tagName = plugin.component;
-                parent.children = [];
-            }
-            else {
-                node.type = 'element';
-                node.tagName = plugin.component;
-            }
-            // node.type = 'element';
-            // node.tagName = plugin.name || plugin.component.name || plugin.component;
-        }
-    }
+    // if(node.data.plugin && plugins.hasOwnProperty(node.data.plugin)) {
+    //     const plugin = plugins[node.data.plugin];
+    //     if(plugin.component) {
+    //         if( node.tagName === "code" && parent.tagName === "pre" ) {
+    //             Object.assign(parent, node);
+    //             parent.type = 'element';
+    //             parent.tagName = plugin.component;
+    //             parent.children = [];
+    //         }
+    //         else {
+    //             node.type = 'element';
+    //             node.tagName = plugin.component;
+    //         }
+    //         // node.type = 'element';
+    //         // node.tagName = plugin.name || plugin.component.name || plugin.component;
+    //     }
+    // }
 
 
 }

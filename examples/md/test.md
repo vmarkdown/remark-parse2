@@ -1,38 +1,15 @@
-```
-// Home.vue
-export default {
-  computed: {
-    username () {
-      // 我们很快就会看到 `params` 是什么
-      return this.$route.params.username
-    }
-  },
-  methods: {
-    goBack () {
-      window.history.length > 1
-        ? this.$router.go(-1)
-        : this.$router.push('/')
-    }
-  }
-}
+
+``` python test=1 a=2
+@requires_authorization
+def somefunc(param1='', param2=0):
+    '''A docstring'''
+    if param1 > param2: # interesting
+        print 'Greater'
+    return (param2 - param1 + 1) or None
+class SomeClass:
+    pass
+>>> message = '''interpreter
+... prompt'''
 ```
 
-```
-// Home.vue
-export default {
-  computed: {
-    username () {
-      // 我们很快就会看到 `params` 是什么
-      return this.$route.params.username
-    }
-  },
-  methods: {
-    goBack () {
-      window.history.length > 1
-        ? this.$router.go(-1)
-        : this.$router.push('/')
-    }
-  }
-}
-```
-
+$$	x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$

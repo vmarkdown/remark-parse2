@@ -6,7 +6,7 @@ const slug = require('remark-slug');
 const externalLinks = require('../packages/remark-external-links');
 
 const toc = require('../packages/vremark-toc');
-const codeMeta = require('../packages/vremark-code-meta');
+// const codeMeta = require('../packages/vremark-code-meta');
 
 const footnote = require('../packages/vremark-footnote');
 const breaks = require('remark-breaks');
@@ -18,16 +18,17 @@ const remark2rehype = require('remark-rehype');
 
 const math = require('../packages/remark-math');
 // const math = require('@paperist/remark-math');
-const vmath = require('../packages/vremark-math');
-const katex = require('../packages/vremark-katex');
-const flowchart = require('../packages/vremark-flowchart');
-const sequence = require('../packages/vremark-sequence');
-const mermaid = require('../packages/vremark-mermaid');
-const g2 = require('../packages/vremark-g2');
-const chart = require('../packages/vremark-chart');
-const resume = require('../packages/vremark-resume');
-const highlight = require('../packages/vremark-highlight');
+// const vmath = require('../packages/vremark-math');
+// const katex = require('../packages/vremark-katex');
+// const flowchart = require('../packages/vremark-flowchart');
+// const sequence = require('../packages/vremark-sequence');
+// const mermaid = require('../packages/vremark-mermaid');
+// const g2 = require('../packages/vremark-g2');
+// const chart = require('../packages/vremark-chart');
+// const resume = require('../packages/vremark-resume');
+// const highlight = require('../packages/vremark-highlight');
 
+const plugins = require('../packages/vremark-plugins');
 
 // const raw = require('../packages/rehype-raw');
 const raw = require('../packages/vrehype-raw');
@@ -73,7 +74,7 @@ exports.plugins = [
 
     }],
 
-    codeMeta,
+    // codeMeta,
 
     // function () {
     //     return function (root, file) {
@@ -89,16 +90,20 @@ exports.plugins = [
 
     footnote,
     breaks,
-    math, vmath,
-    katex,
+    math,
+    //vmath,
 
-    flowchart,
-    sequence,
-    mermaid,
-    g2,
-    chart,
-    resume,
-    highlight,
+
+    plugins,
+
+    // katex,
+    // flowchart,
+    // sequence,
+    // mermaid,
+    // g2,
+    // chart,
+    // resume,
+    // highlight,
 
     hash,
 

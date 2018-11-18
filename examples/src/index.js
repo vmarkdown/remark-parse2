@@ -4,18 +4,45 @@ const unified = require('unified');
 const md = require('../md/test.md');
 const Vue = require('vue').default;
 const parse = require('../../index');
+const plugins = require('../../packages/vrehype-plugins');
 const vdom = require('../../packages/rehype-vdom');
-const processor = unified().use(parse).use(vdom).freeze();
 
-const plugins = {};
+
+// const plugins = {};
+// [
+//     require('./plugins/vremark-plugin-math'),
+//     require('./plugins/vremark-plugin-highlight')
+// ].map(function (plugin) {
+//     plugin.register(Vue);
+//     plugins[plugin.name] = {
+//         component: plugin.component.name
+//     }
+// });
+
+// Vue.component('vremark-component-math', require('./plugins/vremark-plugin-math').component);
+// Vue.component('vremark-component-highlight', require('./plugins/vremark-plugin-highlight').component);
+// function loadPlugins() {
+//     return new Promise(function (resolve, reject) {
+//
+//         [
+//             require('./plugins/vremark-plugin-math'),
+//             require('./plugins/vremark-plugin-highlight')
+//         ].map(function (plugin) {
+//
+//
+//         });
+//
+//
+//     });
+// }
+
+const _plugins = {};
 [
     require('./plugins/vremark-plugin-math'),
     require('./plugins/vremark-plugin-highlight')
 ].map(function (plugin) {
     plugin.register(Vue);
-    plugins[plugin.name] = {
-        component: plugin.component.name
-    }
+    _plugins[plugin.name] = plugin;
 });
 
 
@@ -47,7 +74,7 @@ const app = new Vue({
         async update(md) {
             const h = this.$createElement;
             console.time('process');
-            const file = await processor().data('settings', {
+            const processor = unified().use(parse).use(plugins).use(vdom).data('settings', {
                 config: {
                     root: {
                         tagName: 'main',
@@ -55,8 +82,9 @@ const app = new Vue({
                     }
                 },
                 h:h,
-                plugins: plugins
-            }).process(md);
+                plugins: _plugins
+            });
+            const file = await processor.process(md);
             console.timeEnd('process');
             this.vdom = file.contents;
 
