@@ -35,61 +35,55 @@ module.exports = function plugin(options = {}) {
     var loader = settings.loader;
     var Vue = settings.Vue;
 
-    // var plugins = settings.plugins || {};
-
-    return function transformer(root, file, next) {
-        var temp_plugins = {};
+    return async function transformer(root, file, next) {
+        var plugin_names = {};
         // console.time('plugins');
         visit(root, function (node) {
             return node.data && node.data.plugin;// && plugins[node.data.plugin];
         },function (node, index, parent) {
             var plugin = node.data.plugin;
-            temp_plugins[plugin] = true;
+            plugin_names[plugin] = true;
             data(node, index, parent, settings, plugin);
         });
         // console.timeEnd('plugins');
+        const names = Object.keys(plugin_names);
 
-
-        if(!loader){
+        if(!loader || names.length === 0){
             next();
-            return;
+            return root;
             // return root;
         }
 
-        const loaders = Object.keys(temp_plugins).map(function (name) {
-            return plugins.hasOwnProperty(name)?plugins[name]:loader(name);
+        const Plugins = await loader(names);
+
+        if(!Plugins || Plugins.length === 0){
+            next();
+            return root;
+        }
+
+        Plugins.forEach(function (Plugin) {
+            if(!Plugin) {
+                return root;
+            }
+
+            try{
+                // Plugin.Vue = Vue;
+                if(Vue && Plugin.component) {
+                    Vue.component(Plugin.component.name, Plugin.component);
+                }
+                var plugin = new Plugin();
+                plugin.install();
+                plugins[Plugin.name] = plugin;
+            }
+            catch (e) {
+                console.error(e);
+            }
+
         });
 
-        Promise.all(loaders).then(function (Plugins) {
+        next();
 
-            Plugins && Plugins.length>0 && Plugins.forEach(function (Plugin) {
-                // plugins[Plugin.name] = Plugin;
-                if(!Plugin) {
-                    return;
-                }
-
-                try{
-                    // Plugin.Vue = Vue;
-                    if(Vue && Plugin.component) {
-                        Vue.component(Plugin.component.name, Plugin.component);
-                    }
-                    var plugin = new Plugin();
-                    plugin.install();
-                    plugins[Plugin.name] = plugin;
-                }
-                catch (e) {
-                    console.error(e);
-                }
-
-            });
-
-            next();
-        }).catch(function (e) {
-            console.error(e);
-            next();
-        });
-
-        // return root;
+        return root;
     };
 };
 

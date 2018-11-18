@@ -46,38 +46,47 @@ const vdom = require('../../packages/rehype-vdom');
 // });
 
 
-function loader(name) {
-    return new Promise(function (resolve, reject) {
-        // requirejs([name], function (plugin) {
-        //     resolve(plugin)
-        // }, function () {
-        //     reject();
-        // });
+function loader(names) {
 
-        let Plugin = null;
-        if(name === 'vremark-plugin-math') {
-            Plugin = require('./plugins/vremark-plugin-math');
-        }
-        else if(name === 'vremark-plugin-highlight') {
-            Plugin = require('./plugins/vremark-plugin-highlight');
-        }
+    var plugins = [
+        require('./plugins/vremark-plugin-math'),
+        require('./plugins/vremark-plugin-highlight')
+    ];
 
-        // if(Plugin){
-        //     Plugin.Vue = Vue;
-        // }
+    return plugins;
 
-        resolve( Plugin );
 
-        // if(Plugin && Plugin.init){
-        //     Plugin.init();
-        // }
-        // if(Plugin && Plugin.component){
-        //     Vue.component(Plugin.component.name, Plugin.component);
-        // }
-
-        // resolve( Plugin );
-
-    });
+    // return new Promise(function (resolve, reject) {
+    //     // requirejs([name], function (plugin) {
+    //     //     resolve(plugin)
+    //     // }, function () {
+    //     //     reject();
+    //     // });
+    //
+    //     let Plugin = null;
+    //     if(name === 'vremark-plugin-math') {
+    //         Plugin = require('./plugins/vremark-plugin-math');
+    //     }
+    //     else if(name === 'vremark-plugin-highlight') {
+    //         Plugin = require('./plugins/vremark-plugin-highlight');
+    //     }
+    //
+    //     // if(Plugin){
+    //     //     Plugin.Vue = Vue;
+    //     // }
+    //
+    //     resolve( Plugin );
+    //
+    //     // if(Plugin && Plugin.init){
+    //     //     Plugin.init();
+    //     // }
+    //     // if(Plugin && Plugin.component){
+    //     //     Vue.component(Plugin.component.name, Plugin.component);
+    //     // }
+    //
+    //     // resolve( Plugin );
+    //
+    // });
 }
 
 
