@@ -13,7 +13,7 @@ const breaks = require('remark-breaks');
 const hash = require('../packages/vremark-hash');
 
 
-const remark2rehype = require('remark-rehype');
+const remark2rehype = require('../packages/remark-rehype');
 
 
 const math = require('../packages/remark-math');

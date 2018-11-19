@@ -1,9 +1,10 @@
 const unified = require('unified');
 const md = require('../md/test.md');
 const Vue = require('vue').default;
-const parse = require('../../index');
+
 const plugins = require('../../packages/vrehype-plugins');
 const vdom = require('../../packages/rehype-vdom');
+
 
 function loader(names) {
 
@@ -14,32 +15,81 @@ function loader(names) {
     return plugins;
 }
 
+const vremark = {
+    async parse(md, options) {
+        const parse = require('../../index');
+        const stringify = require('../../packages/vremark-stringify');
+        const processor = unified().use(parse).use(stringify).data('settings', options);
+        const file = await processor.process(md);
+        return file.contents;
 
+    },
+    async render(hast, options) {
+
+        // const render = [
+        //     vdom
+        // ];
+        const processor = unified().use(function () {
+            this.Parser = function (doc, file) {
+                return file.hast;
+            };
+        }).use(vdom).data('settings', options);
+
+        const file = await processor.process({
+            hast: hast
+        });
+
+        return file.contents;
+
+    }
+};
 
 const app = new Vue({
     el: '#app',
     methods: {
         async update(md) {
             const h = this.$createElement;
-            console.time('process');
-            const processor = unified().use(parse).use(plugins).use(vdom).data('settings', {
+
+            const hast = await vremark.parse(md, {
                 config: {
                     root: {
                         tagName: 'main',
                         class: 'markdown-body'
                     }
-                },
-                Vue: Vue,
-                h:h,
-                loader: loader
+                }
             });
-            const file = await processor.process(md);
-            console.timeEnd('process');
-            this.vdom = file.contents;
 
-            console.log(file.mdast);
-            console.log(file.hast);
-            console.log(this.vdom);
+            console.log(hast);
+
+            const vdom = await vremark.render(hast, {
+                h:h
+            });
+
+            console.log(vdom);
+
+            this.vdom = vdom;
+
+            this.$forceUpdate();
+
+            // console.time('process');
+            // const processor = unified().use(parse).use(plugins).use(vdom).data('settings', {
+            //     config: {
+            //         root: {
+            //             tagName: 'main',
+            //             class: 'markdown-body'
+            //         }
+            //     },
+            //     Vue: Vue,
+            //     h:h,
+            //     loader: loader
+            // });
+            // const file = await processor.process(md);
+            // console.timeEnd('process');
+            // this.vdom = file.contents;
+            //
+            // console.log(file.mdast);
+            // console.log(file.hast);
+            // console.log(this.vdom);
 
 
             // visit(file.hast, function (node) {
@@ -49,7 +99,7 @@ const app = new Vue({
             //    console.log(md.substring(position.start.offset, position.end.offset))
             // });
 
-            this.$forceUpdate();
+            // this.$forceUpdate();
         }
     },
     render(h) {

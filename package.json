@@ -1,7 +1,7 @@
 {
   "name": "vremark-parse",
-  "version": "0.0.28",
-  "description": "vremark-parse extension",
+  "version": "0.0.29",
+  "description": "markdown parse for vremark",
   "scripts": {
     "pub": "npm publish .",
     "dev": "webpack-dev-server --config ./examples/webpack.config.js",
@@ -49,12 +49,13 @@
     "vue": "^2.5.17",
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10"
+    "webpack-dev-server": "^3.1.10",
+    "remark-rehype": "^3.0.1",
+    "hashids": "^1.2.2"
   },
   "dependencies": {
     "deepmerge": "^2.2.1",
     "emoji-regex": "^7.0.1",
-    "hashids": "^1.2.2",
     "md-attr-parser": "^1.2.0",
     "mdast-util-toc": "^3.0.0",
     "rehype-parse": "^6.0.0",
@@ -62,7 +63,6 @@
     "remark-breaks": "^1.0.1",
     "remark-external-links": "^3.0.0",
     "remark-parse": "^6.0.2",
-    "remark-rehype": "^3.0.1",
     "remark-slug": "^5.1.0",
     "unist-util-filter": "^1.0.0",
     "unist-util-remove": "^1.0.1",
