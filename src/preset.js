@@ -28,7 +28,7 @@ const math = require('../packages/remark-math');
 // const resume = require('../packages/vremark-resume');
 // const highlight = require('../packages/vremark-highlight');
 
-const plugins = require('../packages/vremark-plugins');
+// const plugins = require('../packages/vremark-plugins');
 
 // const raw = require('../packages/rehype-raw');
 const raw = require('../packages/vrehype-raw');
@@ -47,7 +47,7 @@ var schema = merge(gh, {
     "clobberPrefix": "",
     tagNames: ['input', 'span', 'svg', 'rect'],
     attributes: {
-        '*': ['className', 'style']
+        '*': ['className', 'style', 'lang']
     }
 });
 
@@ -89,12 +89,13 @@ exports.plugins = [
 
 
     footnote,
-    breaks,
     math,
+    breaks,
+
     //vmath,
 
 
-    plugins,
+    // plugins,
 
     // katex,
     // flowchart,
@@ -129,7 +130,7 @@ exports.plugins = [
 
 
 
-    [sanitize, schema],
+    // [sanitize, schema],
 
     // function () {
     //     return function (root, file) {

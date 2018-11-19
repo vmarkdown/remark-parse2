@@ -36,12 +36,6 @@ function factory(tree, options) {
         if (left && 'data' in left) {
             data = left.data
 
-            /* new start */
-            if (data.hData) {
-                right.data = xtend(right.data, data.hData)
-            }
-            /* new end */
-
             if (right.type === 'element' && data.hName) {
                 right.tagName = data.hName
             }
@@ -49,6 +43,12 @@ function factory(tree, options) {
             if (right.type === 'element' && data.hProperties) {
                 right.properties = xtend(right.properties, data.hProperties)
             }
+
+            /* new start */
+            if (data.hData) {
+                right.data = data.hData;
+            }
+            /* new end */
 
             if (right.children && data.hChildren) {
                 right.children = data.hChildren
@@ -78,12 +78,27 @@ function factory(tree, options) {
             props = {}
         }
 
-        return augment(node, {
+        /* old start */
+        // return augment(node, {
+        //     type: 'element',
+        //     tagName: tagName,
+        //     properties: props || {},
+        //     children: children || []
+        // })
+        /* old end */
+
+        /* new start */
+        var nodeOptions = {
             type: 'element',
             tagName: tagName,
             properties: props || {},
             children: children || []
-        })
+        };
+
+        nodeOptions = Object.assign({}, node, nodeOptions);
+
+        return augment(node, nodeOptions);
+        /* new end */
     }
 
     function visitor(definition) {

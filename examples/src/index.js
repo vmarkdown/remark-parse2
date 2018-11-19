@@ -1,5 +1,3 @@
-var visit = require('unist-util-visit');
-
 const unified = require('unified');
 const md = require('../md/test.md');
 const Vue = require('vue').default;
@@ -7,86 +5,13 @@ const parse = require('../../index');
 const plugins = require('../../packages/vrehype-plugins');
 const vdom = require('../../packages/rehype-vdom');
 
-
-// const plugins = {};
-// [
-//     require('./plugins/vremark-plugin-math'),
-//     require('./plugins/vremark-plugin-highlight')
-// ].map(function (plugin) {
-//     plugin.register(Vue);
-//     plugins[plugin.name] = {
-//         component: plugin.component.name
-//     }
-// });
-
-// Vue.component('vremark-component-math', require('./plugins/vremark-plugin-math').component);
-// Vue.component('vremark-component-highlight', require('./plugins/vremark-plugin-highlight').component);
-// function loadPlugins() {
-//     return new Promise(function (resolve, reject) {
-//
-//         [
-//             require('./plugins/vremark-plugin-math'),
-//             require('./plugins/vremark-plugin-highlight')
-//         ].map(function (plugin) {
-//
-//
-//         });
-//
-//
-//     });
-// }
-
-// const _plugins = {};
-// [
-//     require('./plugins/vremark-plugin-math'),
-//     require('./plugins/vremark-plugin-highlight')
-// ].map(function (plugin) {
-//     plugin.register(Vue);
-//     _plugins[plugin.name] = plugin;
-// });
-
-
 function loader(names) {
 
     var plugins = [
         require('./plugins/vremark-plugin-math'),
         require('./plugins/vremark-plugin-highlight')
     ];
-
     return plugins;
-
-
-    // return new Promise(function (resolve, reject) {
-    //     // requirejs([name], function (plugin) {
-    //     //     resolve(plugin)
-    //     // }, function () {
-    //     //     reject();
-    //     // });
-    //
-    //     let Plugin = null;
-    //     if(name === 'vremark-plugin-math') {
-    //         Plugin = require('./plugins/vremark-plugin-math');
-    //     }
-    //     else if(name === 'vremark-plugin-highlight') {
-    //         Plugin = require('./plugins/vremark-plugin-highlight');
-    //     }
-    //
-    //     // if(Plugin){
-    //     //     Plugin.Vue = Vue;
-    //     // }
-    //
-    //     resolve( Plugin );
-    //
-    //     // if(Plugin && Plugin.init){
-    //     //     Plugin.init();
-    //     // }
-    //     // if(Plugin && Plugin.component){
-    //     //     Vue.component(Plugin.component.name, Plugin.component);
-    //     // }
-    //
-    //     // resolve( Plugin );
-    //
-    // });
 }
 
 
