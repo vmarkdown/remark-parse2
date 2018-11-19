@@ -2,8 +2,8 @@ const unified = require('unified');
 const md = require('../md/test.md');
 const Vue = require('vue').default;
 
-const plugins = require('../../packages/vrehype-plugins');
-const vdom = require('../../packages/rehype-vdom');
+// const plugins = require('../../packages/vrehype-plugins');
+// const vdom = require('../../packages/rehype-vdom');
 
 
 function loader(names) {
@@ -25,15 +25,12 @@ const vremark = {
 
     },
     async render(hast, options) {
-
-        // const render = [
-        //     vdom
-        // ];
+        const render = require('vremark-render');
         const processor = unified().use(function () {
             this.Parser = function (doc, file) {
                 return file.hast;
             };
-        }).use(vdom).data('settings', options);
+        }).use(render).data('settings', options);
 
         const file = await processor.process({
             hast: hast
