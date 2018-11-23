@@ -33,7 +33,7 @@ const math = require('../packages/remark-math');
 // const raw = require('../packages/rehype-raw');
 const raw = require('../packages/vrehype-raw');
 const clean = require('../packages/rehype-clean');
-const sanitize = require('rehype-sanitize');
+const sanitize = require('../packages/rehype-sanitize');
 const data = require('../packages/vrehype-data');
 // const hash = require('../packages/vrehype-hash');
 
@@ -41,15 +41,37 @@ const data = require('../packages/vrehype-data');
 
 // exports.settings = {bullet: '*', fences: true};
 
+function allow(schema, value) {
+    return value
+}
 var merge = require('deepmerge').default;
-var gh = require('hast-util-sanitize/lib/github');
+var gh = require('../packages/hast-util-sanitize/lib/github');
 var schema = merge(gh, {
     "clobberPrefix": "",
     tagNames: ['input', 'span', 'svg', 'rect'],
     attributes: {
-        '*': ['className', 'style', 'lang']
+        '*': ['className', 'style']
+    },
+    NODES: {
+        '*': {
+            depth: allow,
+            ordered: allow,
+            start: allow,
+            spread: allow,
+            checked: allow,
+            lang: allow,
+            meta: allow,
+            identifier: allow,
+            label: allow,
+            url: allow,
+            title: allow,
+            alt: allow,
+            referenceType: allow,
+        }
     }
 });
+
+
 
 exports.settings = {};
 
@@ -130,7 +152,7 @@ exports.plugins = [
 
 
 
-    // [sanitize, schema],
+    [sanitize, schema],
 
     // function () {
     //     return function (root, file) {
