@@ -17,19 +17,23 @@ var NODES = {
     element: {
         tagName: handleTagName,
         properties: handleProperties,
-        children: all
+        children: all,
+
+        // depth: allow,
     },
     text: {value: handleValue},
     '*': {
         data: allow,
         position: allow
-
-
     }
 }
 
 /* Sanitize `node`, according to `schema`. */
 function wrapper(node, schema) {
+
+    // NODES['*'] = xtend(NODES['*'], schema.NODES['*']);
+    // delete schema.NODES;
+
     var ctx = {type: 'root', children: []}
     var replace
 
@@ -58,6 +62,7 @@ function wrapper(node, schema) {
 
 /* Sanitize `node`. */
 function one(schema, node, stack) {
+    console.log(node);
     var type = node && node.type
     var replacement = {type: node.type}
     var replace = true
@@ -68,7 +73,8 @@ function one(schema, node, stack) {
 
     if (!own.call(NODES, type)) {
         replace = false
-    } else {
+    }
+    else {
         definition = NODES[type]
 
         if (typeof definition === 'function') {
@@ -78,12 +84,12 @@ function one(schema, node, stack) {
         if (!definition) {
             replace = false
         } else {
-            /* old start
+            /* old start */
             allowed = xtend(definition, NODES['*'])
-            old end */
+            /* old end */
 
             /* new start */
-            allowed = xtend(definition, NODES['*'], (schema.NODES && schema.NODES['*'])?schema.NODES['*']:{})
+            // allowed = xtend(definition, NODES['*'], (schema.NODES && schema.NODES['*'])?schema.NODES['*']:{})
             /* new end */
 
             for (key in allowed) {
@@ -112,7 +118,7 @@ function one(schema, node, stack) {
 
         return replacement.children
     }
-
+    console.log(replacement);
     return replacement
 }
 
@@ -281,6 +287,7 @@ function handleDoctypeName() {
 
 /* Sanitize `tagName`. */
 function handleTagName(schema, tagName, node, stack) {
+    // debugger
     var name = typeof tagName === 'string' ? tagName : null
     var ancestors = schema.ancestors
     var length

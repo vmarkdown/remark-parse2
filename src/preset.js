@@ -51,8 +51,8 @@ var schema = merge(gh, {
     tagNames: ['input', 'span', 'svg', 'rect'],
     attributes: {
         '*': ['className', 'style']
-    },
-    NODES: {
+    }
+    , NODES: {
         '*': {
             depth: allow,
             ordered: allow,
@@ -152,7 +152,7 @@ exports.plugins = [
 
 
 
-    [sanitize, schema],
+    // [sanitize, schema],
 
     // function () {
     //     return function (root, file) {

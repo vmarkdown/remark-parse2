@@ -26,15 +26,8 @@ const vremark = {
     },
     async render(hast, options) {
         const render = require('vremark-render');
-        const processor = unified().use(function () {
-            this.Parser = function (doc, file) {
-                return file.hast;
-            };
-        }).use(render).data('settings', options);
-
-        const file = await processor.process({
-            hast: hast
-        });
+        const processor = unified().use(render).data('settings', options);
+        const file = await processor.process(hast);
 
         return file.contents;
 
