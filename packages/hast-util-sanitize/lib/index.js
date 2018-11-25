@@ -28,6 +28,22 @@ var NODES = {
     }
 }
 
+var NODE_KEYS = [
+    'depth',
+    'ordered',
+    'start',
+    'spread',
+    'checked',
+    'lang',
+    'meta',
+    'identifier',
+    'label',
+    'url',
+    'title',
+    'alt',
+    'referenceType'
+];
+
 /* Sanitize `node`, according to `schema`. */
 function wrapper(node, schema) {
 
@@ -62,7 +78,7 @@ function wrapper(node, schema) {
 
 /* Sanitize `node`. */
 function one(schema, node, stack) {
-    console.log(node);
+    // console.log(node);
     var type = node && node.type
     var replacement = {type: node.type}
     var replace = true
@@ -118,7 +134,21 @@ function one(schema, node, stack) {
 
         return replacement.children
     }
-    console.log(replacement);
+    // console.log(replacement);
+
+
+    /* new start */
+    var options = {};
+    NODE_KEYS.forEach(function (key) {
+        if(node.hasOwnProperty(key)) {
+            options[key] = node[key];
+        }
+    });
+    Object.assign(replacement, options);
+    /* new end */
+
+
+
     return replacement
 }
 

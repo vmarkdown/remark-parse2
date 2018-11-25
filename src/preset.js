@@ -41,9 +41,6 @@ const data = require('../packages/vrehype-data');
 
 // exports.settings = {bullet: '*', fences: true};
 
-function allow(schema, value) {
-    return value
-}
 var merge = require('deepmerge').default;
 var gh = require('../packages/hast-util-sanitize/lib/github');
 var schema = merge(gh, {
@@ -51,23 +48,6 @@ var schema = merge(gh, {
     tagNames: ['input', 'span', 'svg', 'rect'],
     attributes: {
         '*': ['className', 'style']
-    }
-    , NODES: {
-        '*': {
-            depth: allow,
-            ordered: allow,
-            start: allow,
-            spread: allow,
-            checked: allow,
-            lang: allow,
-            meta: allow,
-            identifier: allow,
-            label: allow,
-            url: allow,
-            title: allow,
-            alt: allow,
-            referenceType: allow,
-        }
     }
 });
 
@@ -151,8 +131,7 @@ exports.plugins = [
     // clean,
 
 
-
-    // [sanitize, schema],
+    [sanitize, schema],
 
     // function () {
     //     return function (root, file) {
