@@ -19,6 +19,6 @@ function code(h, node) {
     /* old end */
 
     /* new start */
-    return h(node, 'pre', [h(node, 'code', props, [u('text', value)])])
+    return h(node, 'pre', [h(node, 'code', props, [u('text', {position: node.position}, value)])])
     /* new end */
 }
