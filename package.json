@@ -1,6 +1,6 @@
 {
   "name": "vremark-parse",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "description": "markdown parse for vremark",
   "scripts": {
     "pub": "npm publish .",

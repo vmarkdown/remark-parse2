@@ -1,5 +1,22 @@
-var visit = require('unist-util-visit');
+// var visit = require('unist-util-visit');
 var util = require('../util/util');
+
+function createUniqueHash(hash, map) {
+    if(!map) return hash;
+    if(!map[hash]) {
+        map[hash] = 1;
+    }
+    else{
+        var nhash = hash;
+        while (map[nhash]) {
+            map[hash] = map[hash] + 1;
+            nhash = nhash + map[hash];
+        }
+        hash = nhash;
+        map[hash] = 1;
+    }
+    return hash;
+}
 
 function createPositionValue(node) {
     if(!node || !node.position) return 0;
@@ -45,12 +62,13 @@ function getValues(node) {
 
 function all(nodes) {
     var hashs = [];
+    var map = {};
 
     for(var i=0;i<nodes.length;i++) {
 
         var node = nodes[i];
 
-        var h = one(node);
+        var h = one(node, map);
 
         hashs.push(h);
 
@@ -63,7 +81,7 @@ function all(nodes) {
     return hash;
 }
 
-function one(node) {
+function one(node, map) {
 
     var hashs = [0];
 
@@ -82,6 +100,8 @@ function one(node) {
         return a+b;
     });
 
+    hash = createUniqueHash(hash, map);
+
     node.hash = hash;
 
     return hash;
@@ -90,7 +110,7 @@ function one(node) {
 module.exports = function hashid(options = {}) {
     return function transformer(root) {
         console.time('hash');
-        one(root);
+        one(root, {});
         console.timeEnd('hash');
     };
 };
