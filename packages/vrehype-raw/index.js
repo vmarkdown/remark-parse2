@@ -211,6 +211,15 @@ function processLevel1(root){
 
 }
 
+
+function cleanRemove(root) {
+    root && visit(root, function (node) {
+        if( node.hasOwnProperty('__remove__')){
+            delete node.__remove__;
+        }
+    });
+}
+
 function process(root, depth){
 
     if(depth > 1) return;
@@ -249,13 +258,16 @@ function process(root, depth){
             create.children.push(children[j]);
         }
 
-        Object.assign(node.start.node, create);
+        Object.assign(node.start.node, create, {});
+        // cleanRemove(node.start.node);
         delete node.start.node.value;
     }
 
     root.children = root.children.filter(function (node) {
         return !node.__remove__;
     });
+
+    cleanRemove(root);
 
     for(let m = 0;m<root.children.length;m++) {
         const node0 = root.children[m];
