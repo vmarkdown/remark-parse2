@@ -1,6 +1,6 @@
 {
   "name": "vremark-parse",
-  "version": "0.0.31",
+  "version": "0.0.32",
   "description": "markdown parse for vremark",
   "scripts": {
     "pub": "npm publish .",
@@ -48,7 +48,7 @@
     "text-loader": "^0.0.1",
     "unified": "^7.0.2",
     "unist-find-node": "^1.1.2",
-    "vremark-render": "^0.0.3",
+    "vremark-render": "^0.0.4",
     "vue": "^2.5.17",
     "webpack": "^4.26.0",
     "webpack-cli": "^3.1.2",

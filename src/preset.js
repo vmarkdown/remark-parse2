@@ -10,7 +10,7 @@ const toc = require('../packages/vremark-toc');
 
 const footnote = require('../packages/vremark-footnote');
 const breaks = require('remark-breaks');
-const hash = require('../packages/vremark-hash');
+// const hash = require('../packages/vremark-hash');
 
 
 const remark2rehype = require('../packages/remark-rehype');
@@ -35,7 +35,7 @@ const raw = require('../packages/vrehype-raw');
 const clean = require('../packages/rehype-clean');
 const sanitize = require('../packages/rehype-sanitize');
 const data = require('../packages/vrehype-data');
-// const hash = require('../packages/vrehype-hash');
+const hash = require('../packages/vrehype-hash');
 
 // const vdom = require('../packages/rehype-vdom');
 
@@ -108,7 +108,7 @@ exports.plugins = [
     // resume,
     // highlight,
 
-    hash,
+    // hash,
 
     // function () {
     //     return function (root, file) {
@@ -154,7 +154,7 @@ exports.plugins = [
     //     }
     // },
 
-    // hash,
+    hash,
 
     data,
 

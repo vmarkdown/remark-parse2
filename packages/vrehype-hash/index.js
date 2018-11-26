@@ -1,15 +1,56 @@
 var visit = require('unist-util-visit');
 var util = require('../util/util');
-// var data = require('../unist-util-data');
 
-function all(nodes, map) {
+function createPositionValue(node) {
+    if(!node || !node.position) return 0;
+    return [
+        node.position.start.line,
+        node.position.start.column,
+        node.position.end.line,
+        node.position.end.column
+    ].join('-');
+}
+
+function getValues(node) {
+    var values = [];
+
+    node.hasOwnProperty('type') && values.push(node.type);
+    node.hasOwnProperty('tagName') && values.push(node.tagName);
+    node.hasOwnProperty('value') && values.push(node.value);
+    node.hasOwnProperty('depth') && values.push(node.depth);
+    node.hasOwnProperty('ordered') && values.push(node.ordered);
+    node.hasOwnProperty('start') && values.push(node.start);
+    node.hasOwnProperty('spread') && values.push(node.spread);
+    node.hasOwnProperty('checked') && values.push(node.checked);
+    node.hasOwnProperty('lang') && values.push(node.lang);
+    node.hasOwnProperty('meta') && values.push(node.meta);
+    node.hasOwnProperty('identifier') && values.push(node.identifier);
+    node.hasOwnProperty('label') && values.push(node.label);
+    node.hasOwnProperty('url') && values.push(node.url);
+    node.hasOwnProperty('title') && values.push(node.title);
+    node.hasOwnProperty('referenceType') && values.push(node.referenceType);
+    node.hasOwnProperty('alt') && values.push(node.alt);
+
+    if(node.align && node.align.length > 0){
+        values.push(node.align.join('-'));
+    }
+
+    if(values.length === 0) {
+        values.push(createPositionValue(node));
+    }
+
+    return values;
+}
+
+
+function all(nodes) {
     var hashs = [];
 
     for(var i=0;i<nodes.length;i++) {
 
         var node = nodes[i];
 
-        var h = one(node, map);
+        var h = one(node);
 
         hashs.push(h);
 
@@ -22,110 +63,34 @@ function all(nodes, map) {
     return hash;
 }
 
-function one(node, map) {
+function one(node) {
 
-    if( (node.tagName === 'hr'||node.tagName === 'br') && node.children.length === 0){
-        return 0;
-    }
-
-    var hashs = [];
-
-    // if(node.hasOwnProperty('value') || node.hasOwnProperty('url')){
-    //     var value0 = node.value || node.url;
-    //     var hash0 = util.hash(String(value0));
-    //     hashs.push(hash0);
-    // }
-
-    let values = [];
-    if(node.hasOwnProperty('value')){
-        values.push(node.value);
-    }
-
-    const properties = {};
-
-    if(node.properties){
-        Object.assign(properties, node.properties);
-    }
-    if(node.data && node.data.attrs){
-        Object.assign(properties, node.data.attrs);
-    }
-    if(Object.keys(properties).length > 0) {
-        properties.href && values.push(properties.href);
-        properties.src && values.push(properties.src);
-        properties.alt && values.push(properties.alt);
-        properties.title && values.push(properties.title);
-    }
-
-    // if(node.properties){
-    //     const properties = node.properties;
-    //     properties.href && values.push(properties.href);
-    //     properties.src && values.push(properties.src);
-    //     properties.alt && values.push(properties.alt);
-    //     properties.title && values.push(properties.title);
-    // }
-    // if(node.data && node.data.attrs){
-    //     const attrs = node.data.attrs;
-    //     attrs.href && values.push(attrs.href);
-    //     attrs.src && values.push(attrs.src);
-    //     attrs.alt && values.push(attrs.alt);
-    //     attrs.title && values.push(attrs.title);
-    // }
-
-    if(values.length > 0){
-        var value0 = values.join('');
-        var hash0 = util.hash(String(value0));
-        hashs.push(hash0);
-    }
+    var hashs = [0];
 
     if(node.children && node.children.length>0){
-        var hash1 = all(node.children, map);
+        var hash1 = all(node.children);
         hashs.push(hash1);
     }
 
-    // if(ifhashs.length === 0 && node.position) {
-    //     var value2 =
-    //         node.position.start.line + ':' + node.position.start.column
-    //         + '-'
-    //         + node.position.end.line + ':' + node.position.end.column;
-    //     var hash2 = util.hash(value2);
-    //     hashs.push(hash2);
-    // }
+    var values = getValues(node);
+    if(values.length>0){
+        var hash0 = util.hash(values.join('-'));
+        hashs.push(hash0);
+    }
 
-    var hash = hashs.length>0 ? hashs.reduce(function (a, b) {
+    var hash = hashs.reduce(function (a, b) {
         return a+b;
-    }): 0;
+    });
 
-    if(!map[hash]) {
-        map[hash] = 1;
-    }
-    else{
-        var nhash = hash;
-        while (map[nhash]) {
-            map[hash] = map[hash] + 1;
-            nhash = nhash + map[hash];
-        }
-        hash = nhash;
-        map[hash] = 1;
-    }
-
-    // node.hash = hash;
-
-    if(node.type !== 'root') {
-        // data(node, {
-        //     hash: hash
-        // });
-        node.hash = hash;
-    }
+    node.hash = hash;
 
     return hash;
-
 }
 
 module.exports = function hashid(options = {}) {
     return function transformer(root) {
         console.time('hash');
-        var map = {};
-        one(root, map);
+        one(root);
         console.timeEnd('hash');
     };
 };
