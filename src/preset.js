@@ -110,11 +110,11 @@ exports.plugins = [
 
     hash,
 
-    function () {
-        return function (root, file) {
-            file.mdast = root;
-        }
-    },
+    // function () {
+    //     return function (root, file) {
+    //         file.mdast = root;
+    //     }
+    // },
 
     // rehype
     [remark2rehype, {
@@ -124,8 +124,21 @@ exports.plugins = [
 
     clean,
 
+    // function () {
+    //     return function (root, file) {
+    //         console.log('hast0============');
+    //         console.log(root);
+    //     }
+    // },
+
     raw,
 
+    // function () {
+    //     return function (root, file) {
+    //         console.log('hast1============');
+    //         console.log(root);
+    //     }
+    // },
 
 
     // clean,
@@ -145,11 +158,11 @@ exports.plugins = [
 
     data,
 
-    function () {
-        return function (root, file) {
-            file.hast = root;
-        }
-    },
+    // function () {
+    //     return function (root, file) {
+    //         file.hast = root;
+    //     }
+    // },
 
     // vdom
 ];

@@ -97,7 +97,18 @@ function getList(root) {
             if(isOpenTag(value)) {
 
                 const hast = parseHTML(value);
-                const next = findNextNode(children, index+1, hast.tagName);
+
+                let next = null;
+
+                if(isCloseTag(value)){
+                    next = {
+                        index: index,
+                        node: node
+                    };
+                }
+                else{
+                    next = findNextNode(children, index+1, hast.tagName);
+                }
 
                 if(next) {
                     list.push({
@@ -112,7 +123,9 @@ function getList(root) {
                     index = next.index + 1;
                     continue;
                 }
+
             }
+
         }
 
         index++;

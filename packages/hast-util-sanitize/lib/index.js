@@ -14,6 +14,15 @@ var NODES = {
     root: {children: all},
     doctype: handleDoctype,
     comment: handleComment,
+
+    raw: {
+        tagName: handleTagName,
+        properties: handleProperties,
+        children: all,
+
+        // depth: allow,
+    },
+
     element: {
         tagName: handleTagName,
         properties: handleProperties,
