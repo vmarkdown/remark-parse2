@@ -17,20 +17,7 @@ const remark2rehype = require('../packages/remark-rehype');
 
 
 const math = require('../packages/remark-math');
-// const math = require('@paperist/remark-math');
-// const vmath = require('../packages/vremark-math');
-// const katex = require('../packages/vremark-katex');
-// const flowchart = require('../packages/vremark-flowchart');
-// const sequence = require('../packages/vremark-sequence');
-// const mermaid = require('../packages/vremark-mermaid');
-// const g2 = require('../packages/vremark-g2');
-// const chart = require('../packages/vremark-chart');
-// const resume = require('../packages/vremark-resume');
-// const highlight = require('../packages/vremark-highlight');
 
-// const plugins = require('../packages/vremark-plugins');
-
-// const raw = require('../packages/rehype-raw');
 const raw = require('../packages/vrehype-raw');
 const clean = require('../packages/rehype-clean');
 const sanitize = require('../packages/rehype-sanitize');
@@ -41,15 +28,15 @@ const hash = require('../packages/vrehype-hash');
 
 // exports.settings = {bullet: '*', fences: true};
 
-var merge = require('deepmerge').default;
-var gh = require('../packages/hast-util-sanitize/lib/github');
-var schema = merge(gh, {
-    "clobberPrefix": "",
-    tagNames: ['input', 'span', 'svg', 'rect'],
-    attributes: {
-        '*': ['className', 'style']
-    }
-});
+// var merge = require('deepmerge').default;
+// var gh = require('../packages/hast-util-sanitize/lib/github');
+// var schema = merge(gh, {
+//     "clobberPrefix": "",
+//     tagNames: ['input', 'span', 'svg', 'rect'],
+//     attributes: {
+//         '*': ['className', 'style']
+//     }
+// });
 
 
 
@@ -112,7 +99,8 @@ exports.plugins = [
 
     // function () {
     //     return function (root, file) {
-    //         file.mdast = root;
+    //         debugger
+    //         // file.mdast = root;
     //     }
     // },
 
@@ -135,8 +123,9 @@ exports.plugins = [
 
     // function () {
     //     return function (root, file) {
-    //         console.log('hast1============');
-    //         console.log(root);
+    //         debugger
+    //         // console.log('hast1============');
+    //         // console.log(root);
     //     }
     // },
 
@@ -144,7 +133,7 @@ exports.plugins = [
     // clean,
 
 
-    [sanitize, schema],
+    // [sanitize, schema],
 
     // function () {
     //     return function (root, file) {
@@ -154,7 +143,7 @@ exports.plugins = [
     //     }
     // },
 
-    hash,
+    // hash,
 
     data,
 

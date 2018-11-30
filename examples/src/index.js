@@ -1,10 +1,58 @@
 const unified = require('unified');
-const md = require('../md/test.md');
+// const md = require('../md/test.md');
 const Vue = require('vue').default;
 
 // const plugins = require('../../packages/vrehype-plugins');
 // const vdom = require('../../packages/rehype-vdom');
 
+Vue.component('my-component', {
+    props: {
+        code: String
+    },
+    render(h) {
+        console.log('render');
+        // console.log('code', this.code);
+        // return h('div',{ },'my-component==='+ (new Date().getTime()) );
+
+
+        return h('div',{ }, this.code );
+
+
+    }
+});
+
+
+// (function () {
+//
+//
+//     const app = new Vue({
+//         el: '#app',
+//         render(h) {
+//             return h('p', {}, [
+//
+//                 h('h1', {}, 'h1'+ (new Date().getTime())),
+//
+//                 h('my-component', {
+//                     props: {
+//                         code: '1111'
+//                     }
+//                 })
+//
+//             ]);
+//         }
+//     });
+//
+//     setTimeout(function () {
+//         console.log('update');
+//         app.$forceUpdate();
+//     }, 3000);
+//
+//     setTimeout(function () {
+//         console.log('update');
+//         app.$forceUpdate();
+//     }, 7000);
+//
+// })();
 
 function loader(names) {
 
@@ -97,10 +145,43 @@ const app = new Vue({
     }
 });
 
-
-
-
 (async ()=>{
+
+    setTimeout(function () {
+        app.update(require('../md/1.md'));
+    }, 0);
+
+    setTimeout(function () {
+        document.querySelector('.vremark-root').style.backgroundColor="red";
+        app.update(require('../md/2.md'));
+    }, 5000);
+
+    // setTimeout(function () {
+    //     // document.querySelector('.vremark-root').style.backgroundColor="red";
+    //     app.update(require('../md/2.md'));
+    // }, 5000);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // const mdast = processor.parse(md);
     // console.log(mdast);
     // const hast = await processor.run(mdast);
@@ -136,9 +217,7 @@ const app = new Vue({
     //     app.update(require('../md/test.md'));
     // }, 3000);
 
-    setTimeout(function () {
-        app.update(md);
-    }, 0);
+
 
 
     // setTimeout(function () {

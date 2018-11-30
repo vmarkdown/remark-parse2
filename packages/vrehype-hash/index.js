@@ -107,7 +107,7 @@ function one(node, map) {
     return hash;
 }
 
-module.exports = function hashid(options = {}) {
+module.exports = function plugin(options = {}) {
     return function transformer(root) {
         console.time('hash');
         one(root, {});
