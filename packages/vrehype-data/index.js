@@ -1,6 +1,11 @@
 const visit = require('unist-util-visit');
 const xtend = require('xtend');
 
+let uniqueIndex = 0;
+function createUnique(prefix) {
+    return (prefix || '') + '_' + uniqueIndex++;
+}
+
 function data(node, index, parent, options) {
 
     // if(!node.properties && !node.data) {
@@ -47,6 +52,9 @@ function data(node, index, parent, options) {
         if(node.tagName !== "br" && node.tagName !== "hr") {
             node.data.key = node.hash;
         }
+    }
+    else{
+        node.data.ref = createUnique(node.type);
     }
 
     if (Object.keys(properties).length > 0){
