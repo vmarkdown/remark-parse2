@@ -66,8 +66,7 @@ function generateFootnotes(h) {
         }
         position.end = def.position.end;
 
-        listItems[index].data.hData.hash = createHash(listItems[index]);
-
+        // listItems[index].data.hData.hash = createHash(listItems[index]);
         /* new end */
 
     }
@@ -80,7 +79,7 @@ function generateFootnotes(h) {
         /* new start */
         {
             position: position,
-            data:{
+            /*data:{
                 hData:{
                     hash: (function () {
                         return (listItems.length === 0) ? 0 :listItems.map(function (node) {
@@ -90,8 +89,7 @@ function generateFootnotes(h) {
                         });
                     })()
                 }
-            }
-
+            }*/
         },
         /* new end */
 

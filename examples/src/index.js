@@ -151,10 +151,10 @@ const app = new Vue({
         app.update(require('../md/1.md'));
     }, 0);
 
-    setTimeout(function () {
-        document.querySelector('.vremark-root').style.backgroundColor="red";
-        app.update(require('../md/2.md'));
-    }, 5000);
+    // setTimeout(function () {
+    //     document.querySelector('.vremark-root').style.backgroundColor="red";
+    //     app.update(require('../md/2.md'));
+    // }, 5000);
 
     // setTimeout(function () {
     //     // document.querySelector('.vremark-root').style.backgroundColor="red";
