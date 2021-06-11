@@ -69,7 +69,7 @@
     "remark-external-links": "^3.1.1",
     "remark-parse": "^6.0.3",
     "remark-slug": "^5.1.1",
-    "trim": "0.0.1",
+    "trim": "1.0.1",
     "trim-lines": "^1.1.1",
     "unist-builder": "^1.0.3",
     "unist-util-filter": "^1.0.0",
